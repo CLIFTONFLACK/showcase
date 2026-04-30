@@ -10,7 +10,7 @@
   --font-body: "Montserrat", system-ui, sans-serif;
 }
 
-/* ── Responsive layout ─────────────────────────── */
+/* Responsive layout */
 
 /* App shell */
 .app-shell {
@@ -18,7 +18,7 @@
   height: 100vh;
 }
 
-/* Sidebar — visible on desktop, hidden on mobile */
+/* Sidebar - visible on desktop, hidden on mobile */
 .sidebar {
   width: 240px;
   flex-shrink: 0;
@@ -26,7 +26,7 @@
   flex-direction: column;
 }
 
-/* Bottom nav — hidden on desktop, shown on mobile */
+/* Bottom nav - hidden on desktop, shown on mobile */
 .bottom-nav {
   display: none;
 }
