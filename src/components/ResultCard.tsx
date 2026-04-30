@@ -1,0 +1,247 @@
+import { useState } from 'react'
+import type { Paper, Bibliography, BibliographyType } from '../types'
+import { SOURCE_COLORS, SOURCE_LABELS } from '../lib/sourceColors'
+import { createBibliography } from '../lib/api'
+import { useWindowWidth } from '../hooks/useWindowWidth'
+import { extractConclusion } from '../lib/conclusion'
+
+interface Props {
+  paper: Paper
+  bibliographies: Bibliography[]
+  onAddToBibliography: (bibliographyId: number, paper: Paper) => Promise<void>
+  onBibliographyCreated: (bib: Bibliography) => void
+  isSelected: boolean
+  onToggle: () => void
+  isNew?: boolean
+  onViewSource: (paper: Paper) => void
+  note: string
+  onNoteChange: (note: string) => void
+  bibliographyType: BibliographyType
+}
+
+export default function ResultCard({
+  paper, bibliographies, onAddToBibliography, onBibliographyCreated,
+  isSelected, onToggle, isNew, onViewSource, note, onNoteChange, bibliographyType,
+}: Props) {
+  const isMobile = useWindowWidth() < 768
+  const [expanded, setExpanded] = useState(false)
+  const [selectedBibId, setSelectedBibId] = useState<number | '' | '__new__'>('')
+  const [adding, setAdding] = useState(false)
+  const [added, setAdded] = useState(false)
+  const [newBibName, setNewBibName] = useState('')
+  const [newBibCreator, setNewBibCreator] = useState('')
+  const [creatingBib, setCreatingBib] = useState(false)
+  const [noteOpen, setNoteOpen] = useState(false)
+
+  const conclusion = bibliographyType === 'clinical' ? extractConclusion(paper.abstract) : undefined
+
+  const handleAdd = async () => {
+    if (!selectedBibId) return
+
+    if (selectedBibId === '__new__') {
+      if (!newBibName.trim()) return
+      setCreatingBib(true)
+      try {
+        const newBib = await createBibliography(newBibName.trim(), '', newBibCreator.trim())
+        await onAddToBibliography(newBib.id, paper)
+        onBibliographyCreated(newBib)
+        setAdded(true)
+        setSelectedBibId(newBib.id)
+        setNewBibName('')
+        setNewBibCreator('')
+        setTimeout(() => {
+          setAdded(false)
+          setSelectedBibId('')
+        }, 2000)
+      } catch {
+        // Creating or adding failed — reset state
+      } finally {
+        setCreatingBib(false)
+      }
+      return
+    }
+
+    setAdding(true)
+    try {
+      await onAddToBibliography(Number(selectedBibId), paper)
+      setAdded(true)
+      setTimeout(() => setAdded(false), 2000)
+    } catch {
+      // Adding failed — button resets to ready state
+    } finally {
+      setAdding(false)
+    }
+  }
+
+  const isAddDisabled = !selectedBibId || adding || creatingBib || (selectedBibId === '__new__' && !newBibName.trim())
+
+  return (
+    <div style={{
+      background: isSelected ? '#f0f4ff' : '#fff',
+      border: isSelected ? '1.5px solid #1a3a6b' : '1.5px solid #dde3ef',
+      borderRadius: 10, padding: '20px',
+      marginBottom: 12, boxShadow: '0 1px 4px rgba(26,42,74,0.05)',
+      transition: 'border-color 0.15s, background 0.15s',
+      position: 'relative',
+    }}>
+      {isNew && (
+        <div style={{ position: 'absolute', top: 12, right: 12, background: '#22c55e', color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, letterSpacing: '0.05em' }}>
+          NEW
+        </div>
+      )}
+
+      {/* Checkbox in top-left */}
+      <div style={{ position: 'absolute', top: 16, left: 16 }}>
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={onToggle}
+          style={{ width: 18, height: 18, cursor: 'pointer', accentColor: '#1a3a6b' }}
+        />
+      </div>
+
+      <div style={{ paddingLeft: 32 }}>
+        <div style={{ fontSize: 15, color: '#1a2035', fontWeight: 600, marginBottom: 6, lineHeight: 1.5 }}>
+          {paper.title}
+        </div>
+        <div style={{ fontSize: 13, color: '#7a8aaa', marginBottom: 8 }}>
+          {(paper.authors ?? []).slice(0, 3).join(', ')}{(paper.authors ?? []).length > 3 ? ' et al.' : ''}
+          {paper.journal && ` · ${paper.journal}`}
+          {paper.year && ` · ${paper.year}`}
+          {paper.doi && ` · DOI: ${paper.doi}`}
+        </div>
+
+        {/* Conclusion highlight for Clinical Papers */}
+        {conclusion && (
+          <div style={{ margin: '0 0 10px', padding: '8px 12px', background: '#f0f7ff', borderLeft: '3px solid #1a3a6b', borderRadius: '0 6px 6px 0', fontSize: 13, color: '#1a2035', lineHeight: 1.6 }}>
+            <span style={{ fontWeight: 700, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#1a3a6b', display: 'block', marginBottom: 4 }}>Conclusion</span>
+            {conclusion}
+          </div>
+        )}
+
+        {paper.abstract && (
+          <div style={{ marginBottom: 10 }}>
+            <button onClick={() => setExpanded(e => !e)} style={{ background: 'none', border: 'none', color: '#1a3a6b', cursor: 'pointer', fontSize: 12, padding: 0, fontWeight: 500 }}>
+              {expanded ? 'Hide abstract ▲' : 'Show abstract ▼'}
+            </button>
+            {expanded && (
+              <div style={{ marginTop: 8, padding: '10px 14px', background: '#f7f9fc', borderRadius: 8, fontSize: 13, color: '#5a6a8a', lineHeight: 1.7 }}>
+                {paper.abstract}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Note input */}
+        {noteOpen && (
+          <div style={{ marginBottom: 10 }}>
+            <input
+              type="text"
+              value={note}
+              onChange={e => onNoteChange(e.target.value)}
+              placeholder="Add a note for this paper..."
+              maxLength={500}
+              autoFocus
+              style={{ width: '100%', padding: '7px 10px', border: '1.5px solid #dde3ef', borderRadius: 6, fontSize: 13, fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none' }}
+            />
+          </div>
+        )}
+        {note && !noteOpen && (
+          <div style={{ fontSize: 12, color: '#9aa5bf', fontStyle: 'italic', marginBottom: 8 }}>📝 {note}</div>
+        )}
+
+        <div style={{ display: 'flex', gap: 7, marginBottom: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Source badges — one per source this paper was found in */}
+          {(paper.sources ?? [paper.source]).map(src => {
+            const c = SOURCE_COLORS[src] ?? { bg: '#f0f2f7', text: '#5a6a8a' }
+            return (
+              <span key={src} style={{ padding: '3px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600, background: c.bg, color: c.text }}>
+                {SOURCE_LABELS[src] ?? src}
+              </span>
+            )
+          })}
+          {paper.type && (
+            <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 12, fontWeight: 500, background: '#f0f2f7', color: '#5a6a8a' }}>
+              {paper.type}
+            </span>
+          )}
+          {paper.citationCount !== undefined && (
+            <span style={{ fontSize: 12, color: '#9aa5bf' }}>
+              📊 {paper.citationCount} citations
+            </span>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8, alignItems: isMobile ? 'flex-start' : 'center', flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row' }}>
+          {/* View Source → opens panel */}
+          <button
+            onClick={() => onViewSource(paper)}
+            style={{ padding: '6px 12px', borderRadius: 6, fontSize: 13, border: '1.5px solid #c8d4e8', background: '#fff', color: '#3a5a9a', fontWeight: 500, cursor: 'pointer' }}
+          >
+            View Source ↗
+          </button>
+
+          {/* Note toggle */}
+          <button
+            onClick={() => setNoteOpen(o => !o)}
+            style={{ padding: '6px 12px', borderRadius: 6, fontSize: 13, border: '1.5px solid #dde3ef', background: '#fff', color: '#7a8aaa', fontWeight: 500, cursor: 'pointer' }}
+          >
+            {note ? '📝 Note' : '✏️ Add note'}
+          </button>
+
+          <select
+            value={selectedBibId}
+            onChange={e => {
+              const val = e.target.value
+              setSelectedBibId(val === '__new__' ? '__new__' : val ? Number(val) : '')
+            }}
+            style={{ padding: '5px 10px', borderRadius: 6, border: '1.5px solid #dde3ef', fontSize: 13, color: '#5a6a8a', background: '#f7f9fc', width: isMobile ? '100%' : 'auto' }}
+          >
+            <option value="">Add to bibliography...</option>
+            <option value="__new__">+ Create new bibliography...</option>
+            {bibliographies.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+          </select>
+
+          {selectedBibId === '__new__' && (
+            <>
+              <input
+                type="text"
+                value={newBibName}
+                onChange={e => setNewBibName(e.target.value)}
+                placeholder="Bibliography name..."
+                style={{
+                  padding: '5px 10px', borderRadius: 6, border: '1.5px solid #dde3ef',
+                  fontSize: 13, color: '#1a2035', background: '#fff',
+                  outline: 'none', minWidth: isMobile ? 0 : 160, width: isMobile ? '100%' : 'auto',
+                }}
+              />
+              <input
+                type="text"
+                value={newBibCreator}
+                onChange={e => setNewBibCreator(e.target.value)}
+                placeholder="Your name..."
+                style={{
+                  padding: '5px 10px', borderRadius: 6, border: '1.5px solid #dde3ef',
+                  fontSize: 13, color: '#1a2035', background: '#fff',
+                  outline: 'none', minWidth: isMobile ? 0 : 120, width: isMobile ? '100%' : 'auto',
+                }}
+              />
+            </>
+          )}
+
+          <button
+            onClick={handleAdd}
+            disabled={isAddDisabled}
+            style={{
+              padding: '6px 14px', borderRadius: 6, border: 'none', fontSize: 13, cursor: isAddDisabled ? 'not-allowed' : 'pointer',
+              background: added ? '#22c55e' : '#c8a84b', color: '#fff', fontWeight: 600,
+              opacity: isAddDisabled ? 0.5 : 1, transition: 'background 0.2s',
+            }}
+          >
+            {added ? '✓ Added!' : (adding || creatingBib) ? '...' : '+ Add'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
