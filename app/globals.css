@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --teal-900: #004d4d;
+  --teal-700: #008080;
+  --teal-500: #78bfbf;
+  --teal-300: #aedbdb;
+  --teal-100: #def4f4;
+  --teal-50: #f4ffff;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  color: var(--teal-900);
+  background: var(--teal-50);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container-x { max-width: 1200px; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; }
+
+@media (min-width: 768px) {
+  .container-x { padding-left: 2rem; padding-right: 2rem; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fade-in-up 0.8s ease-out both; }
+
+.card-lift {
+  transition: transform 350ms ease, box-shadow 350ms ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 20px 40px -16px rgba(0,128,128,0.35);
+}
