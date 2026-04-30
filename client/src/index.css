@@ -1,0 +1,212 @@
+/*
+ * IBD Malnutrition Calculator — SLA Health Brand System
+ * Site: SLAHealth.com
+ * Primary Action: #FF5A00 (SLA Orange)
+ * Headings: #0A1929 (SLA Navy)
+ * Background: #F8FAFC (SLA Light)
+ * Typography: Outfit (headings, 800 weight) + Inter (body)
+ * Radius: 12px standard, 16px large card
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+:root {
+  /* SLA Health brand */
+  --radius: 0.75rem; /* 12px */
+
+  /* SLA bg-light: #F8FAFC */
+  --background: oklch(0.984 0.004 247);
+  /* SLA text-main: #1F2937 */
+  --foreground: oklch(0.22 0.015 255);
+
+  /* Card: white #FFFFFF */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.015 255);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.015 255);
+
+  /* SLA orange primary: #FF5A00 */
+  --primary: oklch(0.64 0.22 35);
+  --primary-foreground: oklch(1 0 0);
+
+  /* SLA orange-light: #FFF7ED — used as secondary/tint */
+  --secondary: oklch(0.978 0.025 60);
+  --secondary-foreground: oklch(0.45 0.15 35);
+
+  /* SLA text-muted: #64748B */
+  --muted: oklch(0.965 0.004 247);
+  --muted-foreground: oklch(0.52 0.025 255);
+
+  /* Accent: SLA navy-muted #1E293B */
+  --accent: oklch(0.22 0.025 255);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* SLA border: #E2E8F0 */
+  --border: oklch(0.918 0.012 255);
+  --input: oklch(0.918 0.012 255);
+  /* ring: orange focus glow */
+  --ring: oklch(0.64 0.22 35);
+
+  /* Risk level colors — keeping clinical meaning */
+  --risk-low: oklch(0.50 0.14 145);
+  --risk-low-bg: oklch(0.94 0.04 145);
+  --risk-medium: oklch(0.58 0.14 55);
+  --risk-medium-bg: oklch(0.96 0.04 55);
+  --risk-high: oklch(0.52 0.16 25);
+  --risk-high-bg: oklch(0.96 0.04 25);
+
+  /* Chart colors */
+  --chart-1: oklch(0.64 0.22 35);
+  --chart-2: oklch(0.50 0.14 145);
+  --chart-3: oklch(0.58 0.14 55);
+  --chart-4: oklch(0.52 0.16 25);
+  --chart-5: oklch(0.22 0.025 255);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Outfit', sans-serif;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+}
+
+/* Step transition animations */
+@keyframes stepEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-enter {
+  animation: stepEnter 0.25s ease-out forwards;
+}
+
+/* Gauge animation */
+@keyframes gaugeArc {
+  from {
+    stroke-dashoffset: 251.2;
+  }
+}
+
+.gauge-arc {
+  animation: gaugeArc 1.2s ease-out forwards;
+}
+
+/* Score counter */
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.score-reveal {
+  animation: countUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Option card hover — SLA orange shadow on hover */
+.option-card {
+  transition: all 0.18s ease;
+}
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -4px rgba(255, 90, 0, 0.18);
+}
+.option-card.selected {
+  border-color: #FF5A00;
+  background: #FFF7ED;
+  box-shadow: 0 0 0 2px rgba(255, 90, 0, 0.2);
+}
