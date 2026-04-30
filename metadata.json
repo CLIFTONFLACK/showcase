@@ -1,0 +1,5 @@
+{
+  "name": "SLA Health AI Widget",
+  "description": "A high-performance clinical AI assistant widget for SLA Health, featuring specialized agents for Gastroenterology, Omega-3 research, FSMP, and General Nutrition based on clinical research papers.",
+  "requestFramePermissions": []
+}
