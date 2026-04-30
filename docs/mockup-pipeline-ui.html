@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1440" />
+  <title>UI MOCKUP — SLAHealth Content Generator v2 Pipeline View</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:       #F47920;
+      --navy:         #1e2d40;
+      --bg:           #f0f2f5;
+      --card-bg:      #ffffff;
+      --border:       #dde3ea;
+      --text-primary: #1e2d40;
+      --text-muted:   #6b7a8d;
+      --text-light:   #a0aab4;
+      --col-draft:    #2c3e50;
+      --col-review:   #1a5276;
+      --col-approved: #1a7245;
+      --col-scheduled:#6c3483;
+      --col-published:#1e2d40;
+      --font-ui:      'Montserrat', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      font-family: var(--font-ui);
+      color: var(--text-primary);
+      min-width: 1440px;
+    }
+
+    /* ===== MOCKUP BANNER ===== */
+    .mockup-banner {
+      background: linear-gradient(90deg, #f47920 0%, #d4600f 100%);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 6px 0;
+    }
+
+    /* ===== TOP NAV BAR ===== */
+    .topnav {
+      background: var(--navy);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 200px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--orange);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    .logo-text {
+      font-family: var(--font-ui);
+      font-weight: 800;
+      font-size: 17px;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .logo-text span {
+      color: var(--orange);
+    }
+
+    .logo-sub {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 1px;
+    }
+
+    /* tab nav */
+    .tab-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 40px;
+      flex: 1;
+    }
+
+    .tab-item {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      padding: 6px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+      text-decoration: none;
+    }
+
+    .tab-item:hover {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .tab-item.active {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* right actions */
+    .topnav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .queue-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+
+    .queue-btn .badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 6px;
+      line-height: 1.4;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F47920 0%, #d4600f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 700;
+      border: 2px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+    }
+
+    /* ===== PAGE LAYOUT ===== */
+    .page-wrapper {
+      display: flex;
+      height: calc(100vh - 56px - 28px); /* minus topnav and banner */
+      position: relative;
+    }
+
+    /* ===== BOARD AREA ===== */
+    .board-area {
+      flex: 1;
+      overflow-x: auto;
+      padding: 28px 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .board-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .board-title {
+      font-family: var(--font-ui);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .board-title span {
+      color: var(--orange);
+    }
+
+    .board-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .board-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-outline {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--orange);
+      border: none;
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* ===== KANBAN BOARD ===== */
+    .kanban-board {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      min-width: max-content;
+      padding-bottom: 12px;
+    }
+
+    /* ===== COLUMN ===== */
+    .col {
+      width: 268px;
+      flex-shrink: 0;
+    }
+
+    .col-header {
+      border-radius: 8px 8px 0 0;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0;
+    }
+
+    .col-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .col-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      flex-shrink: 0;
+    }
+
+    .col-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .col-count {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 8px;
+      line-height: 1.5;
+    }
+
+    .col-body {
+      background: rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 10px 8px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 13px 10px;
+      box-shadow: 0 1px 4px rgba(30,45,64,0.06), 0 0 0 0px transparent;
+      position: relative;
+    }
+
+    .card:hover {
+      box-shadow: 0 3px 12px rgba(30,45,64,0.10);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .cat-pill {
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 2px 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .meta-item svg {
+      width: 11px;
+      height: 11px;
+      opacity: 0.65;
+    }
+
+    /* status badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge-approved {
+      color: var(--col-approved);
+      border: 1.5px solid var(--col-approved);
+      background: rgba(26,114,69,0.06);
+    }
+
+    .badge-scheduled {
+      color: var(--col-scheduled);
+      border: 1.5px solid var(--col-scheduled);
+      background: rgba(108,52,131,0.06);
+    }
+
+    .badge-published {
+      color: var(--col-published);
+      border: 1.5px solid var(--col-published);
+      background: rgba(30,45,64,0.06);
+    }
+
+    /* progress bar */
+    .review-progress {
+      margin-bottom: 8px;
+    }
+
+    .progress-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .progress-track {
+      height: 3px;
+      background: #e8ecf0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--col-review);
+      border-radius: 2px;
+    }
+
+    /* reviewer avatars */
+    .reviewer-avatars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .rev-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: var(--font-ui);
+      border: 1.5px solid #fff;
+      position: relative;
+    }
+
+    .rev-avatar.approved {
+      background: #e8f5ee;
+      color: var(--col-approved);
+    }
+
+    .rev-avatar.pending {
+      background: #f0f2f5;
+      color: var(--text-muted);
+    }
+
+    .rev-tick {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      background: var(--col-approved);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #fff;
+    }
+
+    .rev-tick svg { width: 6px; height: 6px; fill: #fff; }
+
+    /* card action buttons */
+    .card-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .act-btn {
+      font-family: var(--font-ui);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .act-btn-primary {
+      background: var(--navy);
+      color: #fff;
+      border: 1px solid var(--navy);
+    }
+
+    .act-btn-outline {
+      background: #fff;
+      color: var(--text-primary);
+      border: 1px solid #c8d0da;
+    }
+
+    .act-btn-outline:hover { border-color: #a0aab4; }
+
+    .act-btn-danger {
+      background: #fff;
+      color: #c0392b;
+      border: 1px solid #f0c0bb;
+    }
+
+    .act-btn-success {
+      background: var(--col-approved);
+      color: #fff;
+      border: 1px solid var(--col-approved);
+    }
+
+    .act-btn-purple {
+      background: var(--col-scheduled);
+      color: #fff;
+      border: 1px solid var(--col-scheduled);
+    }
+
+    /* integration icon */
+    .integration-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .wp-icon, .cal-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .wp-icon { background: #21759b; }
+    .cal-icon { background: #4285F4; }
+
+    /* ===== RIGHT SIDEBAR (collapsed queue) ===== */
+    .sidebar-queue {
+      width: 48px;
+      background: var(--card-bg);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      gap: 16px;
+      position: relative;
+      box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+    }
+
+    .sidebar-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      user-select: none;
+    }
+
+    .sidebar-badge {
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-expand {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-top: auto;
+      margin-bottom: 16px;
+    }
+
+    .sidebar-expand svg { width: 14px; height: 14px; color: var(--text-muted); }
+
+    /* ===== MODAL OVERLAY ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 36, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      width: 460px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      background: var(--navy);
+      padding: 18px 22px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(244,121,32,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-icon svg { width: 20px; height: 20px; }
+
+    .modal-title {
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .modal-subtitle {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .modal-body {
+      padding: 22px 22px 18px;
+    }
+
+    .article-ref {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 13px;
+      margin-bottom: 18px;
+    }
+
+    .article-ref-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 3px;
+    }
+
+    .article-ref-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: #fff;
+      outline: none;
+      appearance: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(244,121,32,0.12);
+    }
+
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7a8d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 13px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gcal-icon {
+      width: 28px;
+      height: 28px;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .toggle-sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    /* pill toggle */
+    .toggle-pill {
+      width: 38px;
+      height: 21px;
+      background: #27ae60;
+      border-radius: 11px;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .toggle-pill::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      right: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle-on-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #27ae60;
+      margin-left: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--border);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #fafbfc;
+    }
+
+    .modal-btn-cancel {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: 1.5px solid var(--border);
+      padding: 9px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .modal-btn-confirm {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--orange);
+      border: none;
+      padding: 9px 20px;
+      border-radius: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 2px 8px rgba(244,121,32,0.35);
+    }
+
+    /* ===== COL COLOURS ===== */
+    .col-draft   .col-header { background: var(--col-draft); }
+    .col-review  .col-header { background: var(--col-review); }
+    .col-approved .col-header { background: var(--col-approved); }
+    .col-scheduled .col-header { background: var(--col-scheduled); }
+    .col-published .col-header { background: var(--col-published); }
+
+    /* ===== DIVIDER ===== */
+    .card-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0;
+    }
+
+    /* ===== UTILITY ===== */
+    .flex-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .text-xs { font-size: 10.5px; }
+    .text-muted { color: var(--text-muted); }
+    .font-600 { font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<!-- MOCKUP BANNER -->
+<div class="mockup-banner">UI MOCKUP &mdash; SLAHealth Content Generator v2 &nbsp;|&nbsp; Pipeline View &nbsp;|&nbsp; Static Design Reference Only</div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <!-- Logo -->
+  <div class="logo-area">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">SLA<span>Health</span></div>
+      <div class="logo-sub">Content Generator</div>
+    </div>
+  </div>
+
+  <!-- Tab nav -->
+  <nav class="tab-nav">
+    <a class="tab-item" href="#">Generate</a>
+    <a class="tab-item active" href="#">Pipeline</a>
+    <a class="tab-item" href="#">Schedule</a>
+    <a class="tab-item" href="#">Archive</a>
+    <a class="tab-item" href="#">Settings</a>
+  </nav>
+
+  <!-- Right -->
+  <div class="topnav-right">
+    <button class="queue-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Publishing Queue
+      <span class="badge">3</span>
+    </button>
+    <div class="avatar">SC</div>
+  </div>
+</nav>
+
+<!-- PAGE WRAPPER -->
+<div class="page-wrapper">
+
+  <!-- BOARD AREA -->
+  <div class="board-area">
+
+    <!-- Board header -->
+    <div class="board-header">
+      <div>
+        <div class="board-title">Content <span>Pipeline</span></div>
+        <div class="board-subtitle">6 articles across all stages &mdash; Updated just now</div>
+      </div>
+      <div class="board-actions">
+        <button class="btn-outline">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filter
+        </button>
+        <button class="btn-outline">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+          Sort
+        </button>
+        <button class="btn-primary">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Article
+        </button>
+      </div>
+    </div>
+
+    <!-- Kanban board -->
+    <div class="kanban-board">
+
+      <!-- ===== DRAFT COLUMN ===== -->
+      <div class="col col-draft">
+        <div class="col-header">
+          <div class="col-header-left">
+            <div class="col-dot"></div>
+            <span class="col-label">Draft</span>
+          </div>
+          <span class="col-count">2</span>
+        </div>
+        <div class="col-body">
+
+          <!-- Draft Card 1 -->
+          <div class="card">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Effect of Vedolizumab vs Adalimumab on Endoscopic Outcomes in Crohn's Disease</div>
+            <div class="card-meta">
+              <span class="meta-item">
+                <!-- word icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                847 words
+              </span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                14 Mar 2026
+              </span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-primary">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send for Review
+              </button>
+              <button class="act-btn act-btn-danger">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- Draft Card 2 -->
+          <div class="card">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Dietary Fibre Supplementation and Gut Microbiome Changes in IBD: A Randomised Trial</div>
+            <div class="card-meta">
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                923 words
+              </span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                15 Mar 2026
+              </span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-primary">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send for Review
+              </button>
+              <button class="act-btn act-btn-danger">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== IN REVIEW COLUMN ===== -->
+      <div class="col col-review">
+        <div class="col-header">
+          <div class="col-header-left">
+            <div class="col-dot"></div>
+            <span class="col-label">In Review</span>
+          </div>
+          <span class="col-count">1</span>
+        </div>
+        <div class="col-body">
+
+          <div class="card">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Ustekinumab Maintenance Therapy in Moderate-to-Severe Ulcerative Colitis</div>
+
+            <!-- Review progress -->
+            <div class="review-progress">
+              <div class="progress-label">
+                <span>Peer Review</span>
+                <span style="color: var(--col-review); font-weight: 700;">2 / 3 approved</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 66%;"></div>
+              </div>
+            </div>
+
+            <!-- Reviewer avatars -->
+            <div class="reviewer-avatars">
+              <div class="rev-avatar approved" title="Dr A. Rahman — Approved">
+                AR
+                <div class="rev-tick">
+                  <svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="rev-avatar approved" title="Prof C. Lamb — Approved">
+                CL
+                <div class="rev-tick">
+                  <svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="rev-avatar pending" title="Dr S. Ghosh — Pending">
+                SG
+              </div>
+              <span style="font-size:10px; color: var(--text-muted); font-weight:500; margin-left:4px;">1 pending</span>
+            </div>
+
+            <div class="card-meta">
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                12 Mar 2026
+              </span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-outline">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Resend Email
+              </button>
+              <button class="act-btn act-btn-danger">Cancel Review</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== APPROVED COLUMN ===== -->
+      <div class="col col-approved">
+        <div class="col-header">
+          <div class="col-header-left">
+            <div class="col-dot"></div>
+            <span class="col-label">Approved</span>
+          </div>
+          <span class="col-count">1</span>
+        </div>
+        <div class="col-body">
+
+          <div class="card" style="border-color: rgba(26,114,69,0.25);">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Real-World Effectiveness of Tofacitinib in Biologic-Experienced UC Patients</div>
+            <div class="status-badge badge-approved">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Approved
+            </div>
+            <div class="card-meta">
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                891 words
+              </span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                10 Mar 2026
+              </span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-success">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Schedule Post
+              </button>
+              <button class="act-btn act-btn-outline">Publish Now</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== SCHEDULED COLUMN ===== -->
+      <div class="col col-scheduled">
+        <div class="col-header">
+          <div class="col-header-left">
+            <div class="col-dot"></div>
+            <span class="col-label">Scheduled</span>
+          </div>
+          <span class="col-count">1</span>
+        </div>
+        <div class="col-body">
+
+          <div class="card" style="border-color: rgba(108,52,131,0.22);">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Subcutaneous Infliximab Versus Intravenous Infliximab in IBD: PK and Efficacy Data</div>
+            <div class="status-badge badge-scheduled">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Scheduled: 20 Mar 2026, 09:00
+            </div>
+
+            <!-- Google Calendar integration row -->
+            <div class="integration-row">
+              <div class="cal-icon">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" fill="#4285F4"/><rect x="3" y="4" width="18" height="7" rx="2" fill="#4285F4"/><line x1="16" y1="2" x2="16" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="7" y="13" width="3" height="3" rx="0.5" fill="#fff"/><rect x="11" y="13" width="3" height="3" rx="0.5" fill="#fff"/></svg>
+              </div>
+              <span>Google Calendar synced</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+
+            <div class="card-meta">
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                8 Mar 2026
+              </span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-purple">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit Schedule
+              </button>
+              <button class="act-btn act-btn-outline">Publish Now</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== PUBLISHED COLUMN ===== -->
+      <div class="col col-published">
+        <div class="col-header">
+          <div class="col-header-left">
+            <div class="col-dot"></div>
+            <span class="col-label">Published</span>
+          </div>
+          <span class="col-count">1</span>
+        </div>
+        <div class="col-body">
+
+          <div class="card" style="border-color: rgba(30,45,64,0.18); opacity: 0.92;">
+            <div class="card-top">
+              <span class="cat-pill">Clinical Review</span>
+            </div>
+            <div class="card-title">Long-term Outcomes of Faecal Microbiota Transplantation in Recurrent C. difficile</div>
+            <div class="status-badge badge-published">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Published
+            </div>
+
+            <!-- WordPress link -->
+            <div class="integration-row">
+              <div class="wp-icon">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.2 14.4l-2.4-6.6h.9l1.5 4.5 1.5-4.5h.9l-1.5 4.5 1.5-4.5h.9l-2.4 6.6zm6.9-2.1c0 .9-.6 1.5-1.5 1.5h-.9c-.9 0-1.5-.6-1.5-1.5V9.6c0-.9.6-1.5 1.5-1.5h.9c.9 0 1.5.6 1.5 1.5v4.7z"/></svg>
+              </div>
+              <span>WordPress &mdash; 5 Mar 2026</span>
+            </div>
+
+            <div class="card-divider"></div>
+            <div class="card-actions">
+              <button class="act-btn act-btn-outline">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                View on WordPress ↗
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /kanban-board -->
+  </div><!-- /board-area -->
+
+  <!-- RIGHT SIDEBAR (collapsed queue) -->
+  <aside class="sidebar-queue">
+    <div class="sidebar-badge">3</div>
+    <span class="sidebar-label">Publishing Queue</span>
+    <div class="sidebar-expand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </div>
+  </aside>
+
+</div><!-- /page-wrapper -->
+
+<!-- ===== SCHEDULE MODAL ===== -->
+<div class="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+    <div class="modal-header">
+      <div class="modal-icon">
+        <!-- Calendar icon -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F47920" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div>
+        <div class="modal-title" id="modal-title">Schedule for Publishing</div>
+        <div class="modal-subtitle">Set publication date, time and channel settings</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Article reference -->
+      <div class="article-ref">
+        <div class="article-ref-label">Article</div>
+        <div class="article-ref-title">Real-World Effectiveness of Tofacitinib in Biologic-Experienced UC Patients</div>
+      </div>
+
+      <!-- Datetime -->
+      <div class="form-group">
+        <label class="form-label" for="schedule-dt">
+          <svg style="display:inline;vertical-align:middle;margin-right:4px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Publish Date &amp; Time
+        </label>
+        <input type="datetime-local" id="schedule-dt" class="form-control" value="2026-03-20T09:00" />
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label class="form-label" for="wp-category">
+          <svg style="display:inline;vertical-align:middle;margin-right:4px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          WordPress Category
+        </label>
+        <select id="wp-category" class="form-control">
+          <option selected>IBD Clinical Reviews</option>
+          <option>Gastroenterology Updates</option>
+          <option>Drug Safety &amp; Pharmacovigilance</option>
+          <option>Research Highlights</option>
+        </select>
+      </div>
+
+      <!-- Google Calendar toggle -->
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">
+          <svg style="display:inline;vertical-align:middle;margin-right:4px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Calendar Sync
+        </label>
+        <div class="toggle-row">
+          <div class="toggle-left">
+            <div class="gcal-icon">
+              <!-- Google Calendar colours -->
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" fill="#4285F4"/>
+                <rect x="3" y="4" width="18" height="7" rx="2" fill="#4285F4"/>
+                <rect x="3" y="7" width="18" height="4" fill="#4285F4"/>
+                <rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="#3367D6" stroke-width="0.5"/>
+                <line x1="16" y1="2" x2="16" y2="6" stroke="#3367D6" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="8" y1="2" x2="8" y2="6" stroke="#3367D6" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="3" y="10" width="18" height="1" fill="#3367D6" opacity="0.3"/>
+                <rect x="7" y="13" width="2.5" height="2.5" rx="0.5" fill="white"/>
+                <rect x="11" y="13" width="2.5" height="2.5" rx="0.5" fill="white"/>
+                <rect x="15" y="13" width="2.5" height="2.5" rx="0.5" fill="white"/>
+              </svg>
+            </div>
+            <div>
+              <div class="toggle-label">Sync to Google Calendar</div>
+              <div class="toggle-sub">Add event to SLAHealth Editorial Calendar</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <div class="toggle-pill"></div>
+            <span class="toggle-on-label">ON</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+      <button class="modal-btn-cancel">Cancel</button>
+      <button class="modal-btn-confirm">
+        Confirm Schedule
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

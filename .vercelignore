@@ -1,0 +1,17 @@
+**/*.test.js
+docs/
+
+# Individual automation handlers — excluded from Vercel function count.
+# They are imported by api/automation/[...slug].js at runtime (bundled together).
+api/automation/approve.js
+api/automation/run.js
+api/automation/telegram.js
+api/automation/telegram-test.js
+api/automation/rules/index.js
+api/automation/rules/[id].js
+api/automation/jobs/index.js
+api/automation/jobs/[id].js
+api/automation/fetch.js
+api/automation/notify.js
+api/automation/rule-schema.js
+api/automation/job-schema.js
