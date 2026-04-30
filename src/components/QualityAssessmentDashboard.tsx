@@ -251,7 +251,7 @@ export default function QualityAssessmentDashboard({
   )
 }
 
-// ── Override modal ────────────────────────────────────────
+// -- Override modal -----
 
 interface OverrideModalProps {
   assessment: QualityAssessment
