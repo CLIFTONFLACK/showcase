@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EPAVANCE 3-Year Sales Forecast</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #006B6B;
+      --bg:         #F0F7F7;
+      --surface:    #FFFFFF;
+      --surface2:   #EAF4F4;
+      --fg:         #0D2626;
+      --muted:      #4A7070;
+      --border:     #C0DADA;
+      --year1:      #006B6B;
+      --year2:      #0066CC;
+      --year3:      #7C3AED;
+      --success:    #16A34A;
+      --error:      #DC2626;
+      --radius:     12px;
+      --shadow:     0 2px 12px rgba(0,107,107,.09);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    .app-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 20px 28px;
+      display: flex; align-items: center; gap: 14px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    }
+    .app-header .logo {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,.18);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .app-header h1 { font-size: 20px; font-weight: 700; }
+    .app-header p  { font-size: 12px; opacity: .75; margin-top: 2px; }
+
+    /* ── Page ────────────────────────────────────────────── */
+    .page { max-width: 960px; margin: 0 auto; padding: 28px 18px 64px; display: flex; flex-direction: column; gap: 32px; }
+
+    /* ── Section headings ────────────────────────────────── */
+    .sh { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+    .sh .icon { font-size: 20px; margin-top: 1px; }
+    .sh h2 { font-size: 17px; font-weight: 700; }
+    .sh p  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── Cards ───────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card + .card { margin-top: 14px; }
+    .card-header {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-header .ch-title { font-size: 14px; font-weight: 700; }
+    .card-header .ch-sub   { font-size: 12px; color: var(--muted); margin-left: auto; }
+    .card-body { padding: 18px; }
+
+    /* ── Info box ────────────────────────────────────────── */
+    .info-box {
+      background: rgba(0,107,107,.08); border: 1px solid rgba(0,107,107,.22);
+      border-radius: 9px; padding: 11px 14px; margin-bottom: 16px;
+      font-size: 12.5px; color: var(--primary); line-height: 1.5;
+    }
+
+    /* ── 3-column year grid ──────────────────────────────── */
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* ── Year card ───────────────────────────────────────── */
+    .year-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-width: 0; /* allow shrink */
+    }
+    .year-card-hdr {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .year-badge {
+      padding: 2px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap;
+    }
+    .year-card-sub { font-size: 11px; color: var(--muted); }
+    .year-card-body { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Compact field ───────────────────────────────────── */
+    .field { display: flex; flex-direction: column; gap: 3px; }
+    .field label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+
+    /* Compact input row */
+    .ir { display: flex; align-items: stretch; }
+    .ir input {
+      flex: 1; min-width: 0;
+      padding: 7px 8px;
+      border: 1.5px solid var(--border); border-right: none;
+      border-radius: 7px 0 0 7px;
+      font-size: 15px; font-weight: 700; color: var(--fg);
+      background: var(--bg);
+      outline: none; transition: border-color .15s;
+    }
+    .ir input:focus { border-color: var(--primary); }
+    .ir input.error { border-color: var(--error); }
+    .ir .sfx {
+      padding: 7px 7px;
+      background: var(--surface2);
+      border: 1.5px solid var(--border); border-left: none;
+      border-radius: 0 7px 7px 0;
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; white-space: nowrap;
+    }
+
+    /* Quarter row: 2x2 grid so all 4 quarters always fit */
+    .q-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .q-cell { display: flex; flex-direction: column; gap: 3px; }
+    .q-cell label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+    .q-cell .ir input { padding: 7px 8px; font-size: 13px; font-weight: 700; }
+    .q-cell .ir .sfx  { padding: 7px 6px; font-size: 11px; }
+
+    .sum-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 7px; border-radius: 5px; font-size: 11px; font-weight: 600;
+    }
+    .sum-badge.ok  { background: rgba(22,163,74,.12); color: var(--success); }
+    .sum-badge.bad { background: rgba(220,38,38,.12); color: var(--error); }
+    .err-msg { font-size: 11px; color: var(--error); }
+
+    /* ── Buttons ─────────────────────────────────────────── */
+    .actions { display: flex; gap: 10px; margin-top: 4px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 11px 20px; border-radius: 9px;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      border: none; transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primary   { background: var(--primary); color: #fff; flex: 1; }
+    .btn-primary:hover { opacity: .88; }
+    .btn-secondary { background: var(--surface); border: 1.5px solid var(--border); color: var(--muted); }
+    .btn-secondary:hover { color: var(--fg); }
+
+    /* ── Year totals banner ──────────────────────────────── */
+    .year-banner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .yb-cell {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 14px;
+      text-align: center; box-shadow: var(--shadow);
+    }
+    .yb-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 5px; }
+    .yb-value { font-size: 28px; font-weight: 800; line-height: 1; }
+    .yb-share { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .grand-bar {
+      background: rgba(0,107,107,.08); border: 1px solid rgba(0,107,107,.22);
+      border-radius: 9px; padding: 12px 18px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 12px;
+    }
+    .grand-bar .gl { font-size: 13px; font-weight: 600; color: var(--primary); }
+    .grand-bar .gv { font-size: 17px; font-weight: 800; color: var(--primary); }
+
+    /* ── Country table ───────────────────────────────────── */
+    .ct { width: 100%; border-collapse: collapse; }
+    .ct thead th {
+      background: var(--surface2); padding: 9px 14px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--muted); border-bottom: 1.5px solid var(--border); text-align: left;
+    }
+    .ct thead th:not(:first-child) { text-align: right; }
+    .ct tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s; }
+    .ct tbody tr:hover { background: var(--surface2); }
+    .ct td { padding: 12px 14px; font-size: 13px; }
+    .ct td:not(:first-child) { text-align: right; font-weight: 600; }
+    .ct tfoot td {
+      padding: 11px 14px; font-size: 13px; font-weight: 700;
+      background: rgba(0,107,107,.07); border-top: 2px solid rgba(0,107,107,.22);
+    }
+    .ct tfoot td:not(:first-child) { text-align: right; }
+
+    .cc { display: flex; align-items: center; gap: 10px; }
+    .flag { font-size: 22px; }
+    .cn { font-weight: 600; font-size: 13px; }
+    .ci { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .exp-btn { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 11px; padding: 2px 5px; }
+    .exp-btn:hover { color: var(--primary); }
+
+    .q-expand-row { display: none; background: var(--surface2); }
+    .q-expand-row.open { display: table-row; }
+    .q-expand-row td { padding: 10px 14px 14px; }
+    .qg {
+      display: grid; grid-template-columns: auto repeat(4, 1fr);
+      gap: 6px 8px; align-items: center;
+    }
+    .qyb {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 7px;
+      font-size: 10px; font-weight: 700; color: #fff;
+    }
+    .qc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 7px; padding: 6px 8px; text-align: center;
+    }
+    .qc .ql { font-size: 9px; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+    .qc .qv { font-size: 12px; font-weight: 700; margin-top: 1px; }
+
+    /* ── Financial model ─────────────────────────────────── */
+    .fin-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .fin-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+      min-width: 0;
+    }
+    .fin-card-hdr {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 12px; border-bottom: 1px solid var(--border);
+    }
+    .fin-card-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* Financial summary table */
+    .fin-summary { width: 100%; border-collapse: collapse; }
+    .fin-summary th {
+      background: var(--surface2); padding: 9px 14px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--muted); border-bottom: 1.5px solid var(--border); text-align: left;
+    }
+    .fin-summary th:not(:first-child) { text-align: right; }
+    .fin-summary td { padding: 11px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+    .fin-summary td:not(:first-child) { text-align: right; font-weight: 600; }
+    .fin-summary tr:last-child td { border-bottom: none; }
+    .fin-summary tfoot td {
+      padding: 11px 14px; font-size: 13px; font-weight: 700;
+      background: rgba(0,107,107,.07); border-top: 2px solid rgba(0,107,107,.22);
+    }
+    .fin-summary tfoot td:not(:first-child) { text-align: right; }
+    .profit-pos { color: var(--success); }
+    .profit-neg { color: var(--error); }
+
+    /* ── Bar chart ───────────────────────────────────────── */
+    .bar-wrap { display: flex; align-items: flex-end; gap: 20px; height: 140px; padding: 0 6px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .bar-val { font-size: 12px; font-weight: 700; text-align: center; }
+    .bar-track { width: 100%; flex: 1; display: flex; align-items: flex-end; }
+    .bar-fill { width: 100%; border-radius: 7px 7px 0 0; min-height: 4px; }
+    .bar-lbl { font-size: 11px; color: var(--muted); }
+
+    /* ── Share row ───────────────────────────────────────── */
+    .share-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .share-cell {
+      border: 1px solid var(--border); border-radius: 9px;
+      padding: 12px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .sdot { width: 9px; height: 9px; border-radius: 50%; }
+    .slbl { font-size: 10px; color: var(--muted); font-weight: 500; }
+    .spct { font-size: 24px; font-weight: 800; }
+
+    /* ── IBD table ───────────────────────────────────────── */
+    .ibd-t { width: 100%; border-collapse: collapse; }
+    .ibd-t th {
+      background: var(--surface2); padding: 9px 14px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--muted); border-bottom: 1.5px solid var(--border); text-align: left;
+    }
+    .ibd-t th:not(:first-child) { text-align: right; }
+    .ibd-t td { padding: 11px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+    .ibd-t td:not(:first-child) { text-align: right; }
+    .ibd-t tr:last-child td { border-bottom: none; }
+
+    /* ── Launch timing table ──────────────────────────────── */
+    .launch-t { width: 100%; border-collapse: collapse; }
+    .launch-t th {
+      background: var(--surface2); padding: 9px 14px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--muted); border-bottom: 1.5px solid var(--border); text-align: left;
+    }
+    .launch-t td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .launch-t tr:last-child td { border-bottom: none; }
+    .launch-sel {
+      padding: 6px 10px; border-radius: 7px;
+      border: 1.5px solid var(--border); background: var(--bg);
+      font-size: 13px; font-weight: 600; color: var(--fg);
+      outline: none; cursor: pointer; transition: border-color .15s;
+      min-width: 80px;
+    }
+    .launch-sel:focus { border-color: var(--primary); }
+    .launch-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border-radius: 6px;
+      font-size: 11px; font-weight: 700;
+      background: rgba(0,107,107,.1); color: var(--primary);
+    }
+    .launch-na {
+      font-size: 11px; color: var(--muted); font-style: italic;
+    }
+
+    /* ── Helpers ─────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+    .text-y1 { color: var(--year1); }
+    .text-y2 { color: var(--year2); }
+    .text-y3 { color: var(--year3); }
+    .text-p  { color: var(--primary); }
+
+    @media (max-width: 700px) {
+      .year-grid, .fin-grid { grid-template-columns: 1fr; }
+      .year-banner, .share-row { grid-template-columns: repeat(3, 1fr); }
+      .yb-value { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo">📊</div>
+  <div>
+    <h1>EPAVANCE Sales Forecast</h1>
+    <p>3-Year Projection · IBD Markets · UK, ZA, AU, NZ, CA</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ══════════════════════════════ 1. IBD MARKET DATA -->
+  <section>
+    <div class="sh">
+      <span class="icon">🏥</span>
+      <div>
+        <h2>IBD Market Data</h2>
+        <p>Baseline patient population used in calculations</p>
+      </div>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="ibd-t">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Population</th>
+              <th>IBD Cases</th>
+              <th>Prevalence</th>
+            </tr>
+          </thead>
+          <tbody id="ibd-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 2. LAUNCH TIMING -->
+  <section>
+    <div class="sh">
+      <span class="icon">🚀</span>
+      <div>
+        <h2>Launch Timing</h2>
+        <p>Set the year and quarter when sales begin in each country</p>
+      </div>
+    </div>
+    <div class="info-box">
+      ℹ️ Quarters before the selected launch date will show zero sales. All forecasts update instantly.
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="launch-t">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Launch Year</th>
+              <th>Launch Quarter</th>
+              <th>First Sale Period</th>
+            </tr>
+          </thead>
+          <tbody id="launch-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 3. MARKET SHARE SETTINGS -->
+  <section>
+    <div class="sh">
+      <span class="icon">⚙️</span>
+      <div>
+        <h2>Market Share Settings</h2>
+        <p>Annual market share % and quarterly distribution per year</p>
+      </div>
+    </div>
+    <div class="info-box">
+      ℹ️ Edit any field — all sections update instantly. Quarterly shares must sum to 100%.
+    </div>
+    <div class="year-grid" id="settings-grid"></div>
+    <div class="actions" style="margin-top:14px">
+      <button class="btn btn-secondary" onclick="resetSettings()">&#x21BA; Reset Defaults</button>
+      <button class="btn btn-primary" id="apply-btn" onclick="applySettings()">✓ Apply &amp; Save</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 4. FINANCIAL MODEL -->
+  <section>
+    <div class="sh">
+      <span class="icon">💰</span>
+      <div>
+        <h2>Financial Model</h2>
+        <p>COGS and Testing Costs per unit for each year</p>
+      </div>
+    </div>
+    <div class="info-box">
+      ℹ️ Enter cost per unit (£). The P&amp;L summary below calculates automatically from unit forecasts.
+    </div>
+    <div class="fin-grid" id="fin-grid"></div>
+  </section>
+
+  <!-- ══════════════════════════════ 5. FORECAST TOTALS -->
+  <section>
+    <div class="sh">
+      <span class="icon">📈</span>
+      <div>
+        <h2>Forecast Totals</h2>
+        <p>Combined unit sales across all markets</p>
+      </div>
+    </div>
+    <div class="year-banner">
+      <div class="yb-cell">
+        <div class="yb-label">Year 1</div>
+        <div class="yb-value text-y1" id="banner-y1">—</div>
+        <div class="yb-share" id="banner-y1-share">1% share</div>
+      </div>
+      <div class="yb-cell">
+        <div class="yb-label">Year 2</div>
+        <div class="yb-value text-y2" id="banner-y2">—</div>
+        <div class="yb-share" id="banner-y2-share">2% share</div>
+      </div>
+      <div class="yb-cell">
+        <div class="yb-label">Year 3</div>
+        <div class="yb-value text-y3" id="banner-y3">—</div>
+        <div class="yb-share" id="banner-y3-share">3% share</div>
+      </div>
+    </div>
+    <div class="grand-bar">
+      <span class="gl">Combined 3-Year Total</span>
+      <span class="gv" id="grand-total">—</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 5. COUNTRY FORECAST -->
+  <section>
+    <div class="sh">
+      <span class="icon">🌍</span>
+      <div>
+        <h2>Country Forecast</h2>
+        <p>Click any row to expand quarterly breakdown</p>
+      </div>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="ct">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th class="text-y1">Year 1</th>
+              <th class="text-y2">Year 2</th>
+              <th class="text-y3">Year 3</th>
+              <th>3-Yr Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="country-tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="text-p" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px">Total</td>
+              <td class="text-y1" id="foot-y1">—</td>
+              <td class="text-y2" id="foot-y2">—</td>
+              <td class="text-y3" id="foot-y3">—</td>
+              <td class="text-p" id="foot-all">—</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 6. VISUAL SUMMARY -->
+  <section>
+    <div class="sh">
+      <span class="icon">📊</span>
+      <div>
+        <h2>Visual Summary</h2>
+        <p>Year-on-year unit sales growth</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span style="font-size:16px">📊</span>
+        <span class="ch-title">Total Units by Year</span>
+        <span class="ch-sub">All markets combined</span>
+      </div>
+      <div class="card-body">
+        <div class="bar-wrap" id="bar-chart"></div>
+        <hr class="divider" />
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px;color:var(--muted);font-weight:500">Combined 3-Year Total</span>
+          <span style="font-size:17px;font-weight:800;color:var(--primary)" id="sum-grand-total">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 7. P&L SUMMARY -->
+  <section>
+    <div class="sh">
+      <span class="icon">📋</span>
+      <div>
+        <h2>P&amp;L Summary</h2>
+        <p>Revenue, COGS, Testing Costs and Gross Profit per year</p>
+      </div>
+    </div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="fin-summary">
+          <thead>
+            <tr>
+              <th>Line Item</th>
+              <th class="text-y1">Year 1</th>
+              <th class="text-y2">Year 2</th>
+              <th class="text-y3">Year 3</th>
+              <th>3-Yr Total</th>
+            </tr>
+          </thead>
+          <tbody id="pl-tbody"></tbody>
+          <tfoot id="pl-tfoot"></tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /* ── Static Data ──────────────────────────────────────── */
+  const COUNTRIES = [
+    { id:'uk', flag:'🇬🇧', country:'United Kingdom', population:71551338, ibdCases:540000, ibdPrevalence:0.75 },
+    { id:'za', flag:'🇿🇦', country:'South Africa',   population:64230980, ibdCases:18000,  ibdPrevalence:0.03 },
+    { id:'au', flag:'🇦🇺', country:'Australia',      population:27231525, ibdCases:180000, ibdPrevalence:0.66 },
+    { id:'nz', flag:'🇳🇿', country:'New Zealand',    population:5225445,  ibdCases:20000,  ibdPrevalence:0.38 },
+    { id:'ca', flag:'🇨🇦', country:'Canada',         population:37742154, ibdCases:320000, ibdPrevalence:0.85 },
+  ];
+
+  const DEFAULTS = {
+    year1: { annual:1,  q1:10, q2:20, q3:30, q4:40 },
+    year2: { annual:2,  q1:10, q2:20, q3:30, q4:40 },
+    year3: { annual:3,  q1:10, q2:20, q3:30, q4:40 },
+  };
+
+  const FIN_DEFAULTS = {
+    year1: { price:50, cogs:12, testing:8 },
+    year2: { price:50, cogs:11, testing:7 },
+    year3: { price:50, cogs:10, testing:6 },
+  };
+
+  // Launch timing: startYear (1-3), startQuarter (1-4)
+  // startYear=1, startQuarter=1 means sales begin from Y1 Q1 (no restriction)
+  const LAUNCH_DEFAULTS = {
+    uk: { startYear:1, startQuarter:1 },
+    za: { startYear:1, startQuarter:1 },
+    au: { startYear:1, startQuarter:1 },
+    nz: { startYear:1, startQuarter:1 },
+    ca: { startYear:1, startQuarter:1 },
+  };
+
+  function loadLaunch() {
+    try { const s = localStorage.getItem('epavance_launch'); if (s) return JSON.parse(s); } catch {}
+    return JSON.parse(JSON.stringify(LAUNCH_DEFAULTS));
+  }
+  function saveLaunch(l) { localStorage.setItem('epavance_launch', JSON.stringify(l)); }
+
+  function loadSettings() {
+    try { const s = localStorage.getItem('epavance_s'); if (s) return JSON.parse(s); } catch {}
+    return JSON.parse(JSON.stringify(DEFAULTS));
+  }
+  function loadFin() {
+    try { const s = localStorage.getItem('epavance_fin'); if (s) return JSON.parse(s); } catch {}
+    return JSON.parse(JSON.stringify(FIN_DEFAULTS));
+  }
+  function saveSettings(s) { localStorage.setItem('epavance_s', JSON.stringify(s)); }
+  function saveFin(f) { localStorage.setItem('epavance_fin', JSON.stringify(f)); }
+
+  let settings = loadSettings();
+  let fin = loadFin();
+  let launch = loadLaunch();
+  /* ── Calculations ─────────────────────────────────────────── */
+
+  // Convert year+quarter to a linear period index (Y1Q1=1 .. Y3Q4=12)
+  function periodIndex(year, quarter) { return (year - 1) * 4 + quarter; }
+
+  function calcYearWithLaunch(ibdCases, yr, yrIndex, launchYear, launchQuarter) {
+    const launchPeriod = periodIndex(launchYear, launchQuarter);
+    const fullTotal = Math.round(ibdCases * yr.annual / 100);
+    const qPcts = [yr.q1, yr.q2, yr.q3, yr.q4];
+    const quarters = qPcts.map((pct, qi) => {
+      const thisPeriod = periodIndex(yrIndex, qi + 1);
+      return thisPeriod >= launchPeriod ? Math.round(fullTotal * pct / 100) : 0;
+    });
+    const total = quarters.reduce((a, b) => a + b, 0);
+    return { total, q1: quarters[0], q2: quarters[1], q3: quarters[2], q4: quarters[3] };
+  }
+
+  function calcForecast() {
+    return COUNTRIES.map(c => {
+      const lc = launch[c.id];
+      return {
+        country: c,
+        year1: calcYearWithLaunch(c.ibdCases, settings.year1, 1, lc.startYear, lc.startQuarter),
+        year2: calcYearWithLaunch(c.ibdCases, settings.year2, 2, lc.startYear, lc.startQuarter),
+        year3: calcYearWithLaunch(c.ibdCases, settings.year3, 3, lc.startYear, lc.startQuarter),
+      };
+    });
+  }
+
+  function totalUnits(yrKey) {
+    const yrIndex = YK.indexOf(yrKey) + 1;
+    return COUNTRIES.reduce((s, c) => {
+      const lc = launch[c.id];
+      const yr = settings[yrKey];
+      return s + calcYearWithLaunch(c.ibdCases, yr, yrIndex, lc.startYear, lc.startQuarter).total;
+    }, 0);
+  }
+
+  const fmt  = n => n.toLocaleString();
+  const fmtc = n => '£' + Math.abs(n).toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0});
+
+  /* ── Render Launch Timing ──────────────────────────────────── */
+  const YEAR_LABELS = ['Year 1', 'Year 2', 'Year 3'];
+  const QTR_LABELS  = ['Q1', 'Q2', 'Q3', 'Q4'];
+
+  function renderLaunchTiming() {
+    const tbody = document.getElementById('launch-tbody');
+    tbody.innerHTML = '';
+    COUNTRIES.forEach(c => {
+      const lc = launch[c.id];
+      const tr = document.createElement('tr');
+
+      // Build first-sale badge label
+      const badgeLabel = `Year ${lc.startYear} · Q${lc.startQuarter}`;
+
+      tr.innerHTML = `
+        <td>
+          <div class="cc">
+            <span class="flag">${c.flag}</span>
+            <div>
+              <div class="cn">${c.country}</div>
+              <div class="ci">${fmt(c.ibdCases)} IBD cases</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <select class="launch-sel" onchange="onLaunchChange('${c.id}','startYear',this.value)">
+            ${[1,2,3].map(y => `<option value="${y}" ${lc.startYear===y?'selected':''}>${YEAR_LABELS[y-1]}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select class="launch-sel" onchange="onLaunchChange('${c.id}','startQuarter',this.value)">
+            ${[1,2,3,4].map(q => `<option value="${q}" ${lc.startQuarter===q?'selected':''}>${QTR_LABELS[q-1]}</option>`).join('')}
+          </select>
+        </td>
+        <td><span class="launch-badge">📅 ${badgeLabel}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function onLaunchChange(countryId, field, value) {
+    launch[countryId][field] = parseInt(value, 10);
+    saveLaunch(launch);
+    renderAll();
+  }
+
+  /* ── Render Settings ─────────────────────────────────────── */
+  const YC = ['var(--year1)','var(--year2)','var(--year3)'];
+  const YK = ['year1','year2','year3'];
+
+  function renderSettings() {
+    const grid = document.getElementById('settings-grid');
+    grid.innerHTML = '';
+    YK.forEach((yk, i) => {
+      const yr = settings[yk];
+      const qSum = yr.q1 + yr.q2 + yr.q3 + yr.q4;
+      const ok = Math.abs(qSum - 100) < 0.01;
+      const card = document.createElement('div');
+      card.className = 'year-card';
+      card.innerHTML = `
+        <div class="year-card-hdr" style="background:${YC[i]}12">
+          <span class="year-badge" style="background:${YC[i]}">Year ${i+1}</span>
+          <span class="year-card-sub">Market Share</span>
+        </div>
+        <div class="year-card-body">
+          <div class="field">
+            <label>Annual Share</label>
+            <div class="ir">
+              <input type="number" min="0" max="100" step="0.1"
+                id="inp-${yk}-annual" value="${yr.annual}"
+                oninput="onSChange('${yk}','annual',this.value)" />
+              <span class="sfx">%</span>
+            </div>
+          </div>
+          <div class="field">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+              <label style="margin-bottom:0">Quarterly Split</label>
+              <span class="sum-badge ${ok?'ok':'bad'}" id="sb-${yk}">${qSum.toFixed(0)}%</span>
+            </div>
+            <div class="q-row">
+              ${['q1','q2','q3','q4'].map((q,qi)=>`
+                <div class="q-cell">
+                  <label>Q${qi+1}</label>
+                  <div class="ir">
+                    <input type="number" min="0" max="100" step="1"
+                      id="inp-${yk}-${q}" value="${yr[q]}"
+                      oninput="onSChange('${yk}','${q}',this.value)"
+                      class="${ok?'':'error'}" />
+                    <span class="sfx">%</span>
+                  </div>
+                </div>`).join('')}
+            </div>
+            ${!ok?`<div class="err-msg">Must sum to 100%</div>`:''}
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function onSChange(yk, field, value) {
+    const v = parseFloat(value);
+    if (!isNaN(v)) settings[yk][field] = v;
+    saveSettings(settings);
+    renderAll();
+  }
+
+  function applySettings() {
+    let allOk = true;
+    YK.forEach(yk => { const y=settings[yk]; if(Math.abs(y.q1+y.q2+y.q3+y.q4-100)>0.01) allOk=false; });
+    const btn = document.getElementById('apply-btn');
+    if (!allOk) {
+      btn.textContent='✗ Fix Errors First'; btn.style.background='var(--error)';
+      setTimeout(()=>{ btn.textContent='✓ Apply & Save'; btn.style.background=''; }, 2200);
+      return;
+    }
+    saveSettings(settings);
+    renderAll();
+    btn.textContent='✓ Saved!'; btn.style.background='var(--success)';
+    setTimeout(()=>{ btn.textContent='✓ Apply & Save'; btn.style.background=''; }, 2000);
+  }
+
+  function resetSettings() {
+    if (!confirm('Reset market share settings to defaults?')) return;
+    settings = JSON.parse(JSON.stringify(DEFAULTS));
+    saveSettings(settings);
+    renderAll();
+  }
+
+  /* ── Render Financial Model ───────────────────────────── */
+  function renderFinModel() {
+    const grid = document.getElementById('fin-grid');
+    grid.innerHTML = '';
+    YK.forEach((yk, i) => {
+      const f = fin[yk];
+      const card = document.createElement('div');
+      card.className = 'fin-card';
+      card.innerHTML = `
+        <div class="fin-card-hdr" style="background:${YC[i]}12">
+          <span class="year-badge" style="background:${YC[i]}">Year ${i+1}</span>
+          <span class="year-card-sub">Cost Inputs</span>
+        </div>
+        <div class="fin-card-body">
+          <div class="field">
+            <label>Price per Unit</label>
+            <div class="ir">
+              <input type="number" min="0" step="0.01"
+                id="fin-${yk}-price" value="${f.price}"
+                oninput="onFChange('${yk}','price',this.value)" />
+              <span class="sfx">£</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>COGS per Unit</label>
+            <div class="ir">
+              <input type="number" min="0" step="0.01"
+                id="fin-${yk}-cogs" value="${f.cogs}"
+                oninput="onFChange('${yk}','cogs',this.value)" />
+              <span class="sfx">£</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Testing Cost per Unit</label>
+            <div class="ir">
+              <input type="number" min="0" step="0.01"
+                id="fin-${yk}-testing" value="${f.testing}"
+                oninput="onFChange('${yk}','testing',this.value)" />
+              <span class="sfx">£</span>
+            </div>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function onFChange(yk, field, value) {
+    const v = parseFloat(value);
+    if (!isNaN(v)) fin[yk][field] = v;
+    saveFin(fin);
+    renderPL();
+  }
+
+  /* ── Render P&L ───────────────────────────────────────── */
+  function renderPL() {
+    const units = YK.map(yk => totalUnits(yk));
+    const rows = [
+      { label: '💊 Units Sold',        vals: units.map(u => fmt(u)),                                           bold: false, unit: true  },
+      { label: '💵 Revenue',           vals: YK.map((yk,i)=> fmtc(units[i] * fin[yk].price)),                 bold: false, cls: 'text-y'+[1,2,3] },
+      { label: '🏭 COGS',              vals: YK.map((yk,i)=> '('+fmtc(units[i] * fin[yk].cogs)+')'),          bold: false, cls: 'profit-neg' },
+      { label: '🧪 Testing Costs',     vals: YK.map((yk,i)=> '('+fmtc(units[i] * fin[yk].testing)+')'),       bold: false, cls: 'profit-neg' },
+    ];
+    const grossProfit = YK.map((yk,i) => units[i] * (fin[yk].price - fin[yk].cogs - fin[yk].testing));
+    const totalGP = grossProfit.reduce((a,b)=>a+b,0);
+
+    const tbody = document.getElementById('pl-tbody');
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td style="font-weight:${r.bold?700:500}">${r.label}</td>
+        ${r.vals.map((v,i)=>`<td class="${r.cls||''}" style="color:${r.unit?'var(--fg)':''}">${v}</td>`).join('')}
+        <td style="color:var(--muted);font-weight:500">—</td>
+      </tr>`).join('');
+
+    const tfoot = document.getElementById('pl-tfoot');
+    tfoot.innerHTML = `
+      <tr>
+        <td class="text-p">📊 Gross Profit</td>
+        ${grossProfit.map((gp,i)=>`
+          <td class="${gp>=0?'profit-pos':'profit-neg'}" style="font-weight:700">
+            ${gp>=0?'':'-'}${fmtc(gp)}
+          </td>`).join('')}
+        <td class="${totalGP>=0?'profit-pos':'profit-neg'}" style="font-weight:700">
+          ${totalGP>=0?'':'-'}${fmtc(totalGP)}
+        </td>
+      </tr>`;
+  }
+
+  /* ── Render Forecast ──────────────────────────────────── */
+  function renderForecast() {
+    const forecast = calcForecast();
+    const t1 = forecast.reduce((s,c)=>s+c.year1.total,0);
+    const t2 = forecast.reduce((s,c)=>s+c.year2.total,0);
+    const t3 = forecast.reduce((s,c)=>s+c.year3.total,0);
+    const tAll = t1+t2+t3;
+
+    document.getElementById('banner-y1').textContent = fmt(t1);
+    document.getElementById('banner-y2').textContent = fmt(t2);
+    document.getElementById('banner-y3').textContent = fmt(t3);
+    document.getElementById('banner-y1-share').textContent = settings.year1.annual+'% share';
+    document.getElementById('banner-y2-share').textContent = settings.year2.annual+'% share';
+    document.getElementById('banner-y3-share').textContent = settings.year3.annual+'% share';
+    document.getElementById('grand-total').textContent = fmt(tAll)+' units';
+    document.getElementById('foot-y1').textContent = fmt(t1);
+    document.getElementById('foot-y2').textContent = fmt(t2);
+    document.getElementById('foot-y3').textContent = fmt(t3);
+    document.getElementById('foot-all').textContent = fmt(tAll);
+
+    const tbody = document.getElementById('country-tbody');
+    const openRows = new Set();
+    tbody.querySelectorAll('.q-expand-row.open').forEach(r=>openRows.add(r.id));
+    tbody.innerHTML = '';
+
+    forecast.forEach(item => {
+      const rowTotal = item.year1.total+item.year2.total+item.year3.total;
+      const rowId = 'qr-'+item.country.id;
+      const isOpen = openRows.has(rowId);
+      const tr = document.createElement('tr');
+      tr.onclick = () => {
+        const qr = document.getElementById(rowId);
+        qr.classList.toggle('open');
+        tr.querySelector('.exp-btn').textContent = qr.classList.contains('open')?'▲':'▼';
+      };
+      tr.innerHTML = `
+        <td><div class="cc">
+          <span class="flag">${item.country.flag}</span>
+          <div>
+            <div class="cn">${item.country.country}</div>
+            <div class="ci">${fmt(item.country.ibdCases)} IBD cases</div>
+          </div>
+        </div></td>
+        <td class="text-y1">${fmt(item.year1.total)}</td>
+        <td class="text-y2">${fmt(item.year2.total)}</td>
+        <td class="text-y3">${fmt(item.year3.total)}</td>
+        <td style="font-weight:700">${fmt(rowTotal)}</td>
+        <td><button class="exp-btn">${isOpen?'▲':'▼'}</button></td>`;
+      tbody.appendChild(tr);
+
+      const qtr = document.createElement('tr');
+      qtr.className = 'q-expand-row'+(isOpen?' open':'');
+      qtr.id = rowId;
+      qtr.innerHTML = `<td colspan="6"><div class="qg">
+        <span class="qyb" style="background:var(--year1)">Y1</span>
+        ${['q1','q2','q3','q4'].map((q,i)=>`<div class="qc"><div class="ql">Q${i+1}</div><div class="qv text-y1">${fmt(item.year1[q])}</div></div>`).join('')}
+        <span class="qyb" style="background:var(--year2)">Y2</span>
+        ${['q1','q2','q3','q4'].map((q,i)=>`<div class="qc"><div class="ql">Q${i+1}</div><div class="qv text-y2">${fmt(item.year2[q])}</div></div>`).join('')}
+        <span class="qyb" style="background:var(--year3)">Y3</span>
+        ${['q1','q2','q3','q4'].map((q,i)=>`<div class="qc"><div class="ql">Q${i+1}</div><div class="qv text-y3">${fmt(item.year3[q])}</div></div>`).join('')}
+      </div></td>`;
+      tbody.appendChild(qtr);
+    });
+  }
+
+  /* ── Render Summary ───────────────────────────────────── */
+  function renderSummary() {
+    const t1=totalUnits('year1'), t2=totalUnits('year2'), t3=totalUnits('year3');
+    const tAll=t1+t2+t3;
+    const maxV = Math.max(t1,t2,t3)||1;
+    const MAX_PX = 100;
+    const bars = [
+      {label:'Year 1',val:t1,color:'var(--year1)'},
+      {label:'Year 2',val:t2,color:'var(--year2)'},
+      {label:'Year 3',val:t3,color:'var(--year3)'},
+    ];
+    document.getElementById('bar-chart').innerHTML = bars.map(b=>`
+      <div class="bar-col">
+        <div class="bar-val">${fmt(b.val)}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="background:${b.color};height:${Math.max(4,Math.round(b.val/maxV*MAX_PX))}px"></div>
+        </div>
+        <div class="bar-lbl">${b.label}</div>
+      </div>`).join('');
+    document.getElementById('sum-grand-total').textContent = fmt(tAll)+' units';
+    const ss1 = document.getElementById('sum-share-y1'); if (ss1) ss1.textContent = settings.year1.annual+'%';
+    const ss2 = document.getElementById('sum-share-y2'); if (ss2) ss2.textContent = settings.year2.annual+'%';
+    const ss3 = document.getElementById('sum-share-y3'); if (ss3) ss3.textContent = settings.year3.annual+'%';
+  }
+
+  /* ── Render IBD ───────────────────────────────────────── */
+  function renderIBD() {
+    document.getElementById('ibd-tbody').innerHTML = COUNTRIES.map(c=>`
+      <tr>
+        <td><div class="cc">
+          <span class="flag">${c.flag}</span>
+          <div><div class="cn">${c.country}</div><div class="ci">Pop: ${fmt(c.population)}</div></div>
+        </div></td>
+        <td>${fmt(c.population)}</td>
+        <td style="font-weight:700;color:var(--primary)">${fmt(c.ibdCases)}</td>
+        <td>${c.ibdPrevalence}%</td>
+      </tr>`).join('');
+  }
+
+  /* ── Render All ─────────────────────────────────────────── */
+  function renderAll() {
+    renderIBD();
+    renderSettings();
+    renderFinModel();
+    renderLaunchTiming();
+    renderForecast();
+    renderPL();
+    renderSummary();
+  }
+
+  renderAll();
+</script>
+</body>
+</html>
