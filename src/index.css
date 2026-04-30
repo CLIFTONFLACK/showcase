@@ -1,0 +1,802 @@
+:root {
+    --primary: #FF5500;
+    /* SLA Pharma Orange */
+    --primary-hover: #E64D00;
+    --bg: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text: #2d2d2d;
+    --text-dim: #6c757d;
+    --border: #dee2e6;
+    --card-bg: #ffffff;
+    --success: #28a745;
+    --danger: #dc3545;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-secondary);
+    color: var(--text);
+    font-family: var(--font-family);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+}
+
+#root {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.app-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo-img {
+    height: 60px;
+    width: auto;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0;
+}
+
+.subtitle {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+input {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.75rem 0.75rem 2rem;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.1);
+}
+
+.toggle-group {
+    display: flex;
+    background: #eee;
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.toggle-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: all 0.2s;
+}
+
+.toggle-btn.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Table styles */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.results-table th {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+.results-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.results-table tr:last-child td {
+    border-bottom: none;
+}
+
+.val-bold {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.payment-badge {
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.royalty-row:hover {
+    background: rgba(255, 85, 0, 0.02);
+}
+
+.net-profit-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid var(--primary);
+}
+
+.net-profit-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    flex: 1;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    flex: 1;
+    background: white;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-secondary);
+}
+
+.editable-pct {
+    width: 60px;
+    padding: 4px;
+    text-align: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.editable-pct:hover,
+.editable-pct:focus {
+    background: white;
+    border-color: var(--border);
+}
+
+/* Tabs */
+.tabs-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    background: white;
+    color: var(--text-dim);
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 85, 0, 0.2);
+}
+
+/* Pipeline List */
+.pipeline-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.deals-table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.deals-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.deals-table th {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.deals-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.deals-table tr:last-child td {
+    border-bottom: none;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background: var(--bg-secondary);
+}
+
+.icon-btn.delete:hover {
+    background: #fff0f0;
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.save-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .tabs-nav {
+        flex-direction: column;
+    }
+
+    .save-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+.currency-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sales-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.year-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.year-input label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+.year-input input {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.tab-header-mini {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.view-toggle {
+    display: flex;
+    background: var(--bg-secondary);
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.mini-tab {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mini-tab.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.results-table.breakdown {
+    font-size: 0.85rem;
+}
+
+.breakdown-container {
+    margin-bottom: 2rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.profit-row td {
+    color: var(--primary);
+    font-weight: 700;
+    background: rgba(255, 85, 0, 0.03);
+}
+
+.royalties-section {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+}
+
+.royalties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.royalty-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.royalty-name {
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.royalty-amount {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.85rem;
+}
+
+/* Layout V2 */
+.app-card {
+    max-width: 1800px !important;
+    margin: 2rem auto;
+    padding: 2.5rem;
+}
+
+.grid-v2 {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 1400px) {
+    .grid-v2 {
+        grid-template-columns: 1fr 1.5fr;
+    }
+}
+
+@media (max-width: 1000px) {
+    .grid-v2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Service Fees Grid */
+.fees-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.fee-row {
+    display: contents;
+}
+
+/* Pricing Toggle */
+.segmented-control {
+    display: flex;
+    background: var(--bg-secondary);
+    padding: 2px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+}
+
+.segmented-control button {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.segmented-control button.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    border-radius: 16px;
+    padding: 2rem;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.overhead-row td {
+    color: #6366f1;
+    /* Indigo for overhead */
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.05);
+}
+
+/* FX Reference Box */
+.fx-reference-box {
+    background: linear-gradient(135deg, rgba(255, 85, 0, 0.05), rgba(99, 102, 241, 0.05));
+    border: 1px solid rgba(255, 85, 0, 0.2);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.fx-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.fx-date {
+    margin-left: auto;
+    color: var(--text-dim);
+    font-weight: 400;
+}
+
+.fx-rates {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.7rem;
+    color: var(--text);
+}
+
+.fx-rates span {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+/* Deal Mode Toggle */
+.deal-mode-toggle {
+    background: var(--bg-secondary);
+    border: 2px solid var(--primary);
+}
+
+.deal-mode-toggle button {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+}
+
+.deal-mode-toggle button.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Comparison Box */
+.comparison-box {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.comparison-toggle {
+    transition: background 0.2s ease;
+}
+
+.comparison-toggle:hover {
+    background: rgba(255, 85, 0, 0.1);
+}
+
+/* Breakdown Container */
+.breakdown-container {
+    overflow-x: auto;
+}
+
+.breakdown-container table {
+    min-width: 600px;
+}
+
+/* Partner Analysis Rows */
+.partner-analysis-header td {
+    border-top: 2px solid var(--border);
+    padding-top: 1rem;
+    font-weight: 700;
+    color: var(--text-dim);
+}
+
+.partner-profit-row td {
+    background: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    font-weight: 600;
+}
+
+/* Wider V2 Layout Adjustment */
+@media (min-width: 1400px) {
+    #root {
+        max-width: 1600px;
+    }
+
+    .app-card {
+        padding: 2.5rem;
+    }
+
+    .grid-v2 {
+        grid-template-columns: minmax(400px, 1fr) minmax(500px, 1.5fr);
+    }
+}
+
+@media (min-width: 1800px) {
+    #root {
+        max-width: 1800px;
+    }
+}
+
+/* Animation for new elements */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.comparison-box {
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Print/PDF Styles */
+@media print {
+    .app-card {
+        box-shadow: none;
+        border: none;
+        padding: 1rem;
+    }
+
+    .tabs-nav,
+    .comparison-toggle,
+    .btn-primary,
+    .btn-secondary {
+        display: none !important;
+    }
+
+    .results-table {
+        font-size: 10pt;
+    }
+
+    .fx-reference-box {
+        break-inside: avoid;
+    }
+}
