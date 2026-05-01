@@ -36,7 +36,7 @@ export default function BibliographyPrintPage() {
       {/* Print controls -- hidden on print */}
       <div className="no-print" style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
         <button onClick={() => navigate(`/bibliographies/${id}`)} style={{ padding: '7px 14px', borderRadius: 6, border: '1.5px solid #dde3ef', background: '#fff', cursor: 'pointer', fontSize: 13 }}>
-          <- Back
+          Back
         </button>
         <button onClick={() => window.print()} style={{ padding: '7px 18px', borderRadius: 6, border: 'none', background: '#1a3a6b', color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
           🖨️ Print / Save as PDF
