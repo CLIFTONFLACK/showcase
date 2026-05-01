@@ -7,7 +7,7 @@
 // Mirrors the structure of screeningEngine.ts (batching, JSON-only response,
 // graceful parse failure) so the rest of the codebase has one mental model.
 
-import Anthropic from '@anthropic-ai/sdk'
+import { callLLM } from './llm'
 
 export interface ExtractionField {
   name: string
@@ -98,16 +98,8 @@ RESPONSE FORMAT — return ONLY this JSON, no other text:
 
 /** Run a single extraction batch through Claude Haiku. */
 export async function extractFromPapers(batch: ExtractionBatch): Promise<ExtractionResult[]> {
-  const client = new Anthropic()
   const prompt = buildExtractionPrompt(batch)
-
-  const message = await client.messages.create({
-    model: MODEL,
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }],
-  })
-
-  const responseText = message.content[0].type === 'text' ? message.content[0].text : ''
+  const responseText = await callLLM(prompt, 4096)
 
   try {
     const jsonMatch = responseText.match(/\[[\s\S]*\]/)

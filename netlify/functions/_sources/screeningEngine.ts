@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk'
+import { callLLM } from './llm'
 
 export interface Paper {
   id: string
@@ -79,23 +79,8 @@ Only return the JSON array, no other text.`
  * Batches papers in groups of 50 for cost efficiency.
  */
 export async function screenPapers(batch: ScreeningBatch): Promise<ScreeningResult[]> {
-  const client = new Anthropic()
-
   const prompt = buildScreeningPrompt(batch)
-
-  const message = await client.messages.create({
-    model: 'claude-3-5-haiku-20241022',
-    max_tokens: 4096,
-    messages: [
-      {
-        role: 'user',
-        content: prompt,
-      },
-    ],
-  })
-
-  // Extract JSON from response
-  const responseText = message.content[0].type === 'text' ? message.content[0].text : ''
+  const responseText = await callLLM(prompt, 4096)
 
   let results: ScreeningResult[] = []
   try {

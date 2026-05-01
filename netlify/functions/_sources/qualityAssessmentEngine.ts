@@ -8,7 +8,7 @@
 // judgements ('low' | 'some_concern' | 'high'), short reasoning per domain,
 // and an overall 0-10 quality score.
 
-import Anthropic from '@anthropic-ai/sdk'
+import { callLLM } from './llm'
 
 export type BiasJudgement = 'low' | 'some_concern' | 'high'
 
@@ -109,16 +109,8 @@ Return ONLY this JSON array, no other text:
 }
 
 export async function assessQualityBatch(batch: QualityBatch): Promise<QualityAssessmentResult[]> {
-  const client = new Anthropic()
   const prompt = buildQualityPrompt(batch)
-
-  const message = await client.messages.create({
-    model: MODEL,
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }],
-  })
-
-  const responseText = message.content[0].type === 'text' ? message.content[0].text : ''
+  const responseText = await callLLM(prompt, 4096)
 
   try {
     const jsonMatch = responseText.match(/\[[\s\S]*\]/)
