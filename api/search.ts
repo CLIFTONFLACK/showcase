@@ -74,7 +74,13 @@ export default async function handler(req: Request): Promise<Response> {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  await migrate()
+  try {
+    await migrate()
+  } catch (e) {
+    return new Response(JSON.stringify({ error: 'migrate failed', detail: String(e) }), {
+      status: 500, headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
   let params: SearchParams
   try {
