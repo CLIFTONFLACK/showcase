@@ -106,7 +106,7 @@ export default function BibliographiesPage() {
               {/* Truncated description */}
               {bib.description && (
                 <div style={{ fontSize: 13, color: '#7a8aaa', marginBottom: 6, lineHeight: 1.5 }}>
-                  {bib.description.length > 80 ? bib.description.slice(0, 80) + '…' : bib.description}
+                  {bib.description.length > 80 ? bib.description.slice(0, 80) + '...' : bib.description}
                 </div>
               )}
               {/* Tag chips */}

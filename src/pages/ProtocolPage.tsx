@@ -68,7 +68,7 @@ export default function ProtocolPage() {
   }
 
   if (loading) {
-    return <div style={{ padding: 60, textAlign: 'center', color: '#9aa5bf' }}>Loading…</div>
+    return <div style={{ padding: 60, textAlign: 'center', color: '#9aa5bf' }}>Loading...</div>
   }
 
   return (
@@ -80,7 +80,7 @@ export default function ProtocolPage() {
           cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 18, padding: 0,
         }}
       >
-        ← Back to bibliography
+        <- Back to bibliography
       </button>
 
       <div style={{ fontSize: 30, fontWeight: 800, color: '#1a2035', marginBottom: 4 }}>

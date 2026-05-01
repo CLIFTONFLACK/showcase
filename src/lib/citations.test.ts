@@ -30,7 +30,7 @@ describe('formatVancouver', () => {
     expect(result).toContain('The Lancet')
     expect(result).toContain('doi.org/10.1000/xyz')
   })
-  it('handles missing authors — starts with title', () => {
+  it('handles missing authors -- starts with title', () => {
     const result = formatVancouver({ ...fullPaper, authors: [] })
     expect(result).toMatch(/^Effect of Drug X/)
   })
@@ -75,7 +75,7 @@ describe('formatHarvard', () => {
     expect(result).toContain('(2023)')
     expect(result).toContain("'Effect of Drug X")
   })
-  it('handles no authors — uses year only', () => {
+  it('handles no authors -- uses year only', () => {
     const result = formatHarvard({ ...fullPaper, authors: [] })
     expect(result).toContain('(2023)')
     expect(result).not.toContain('Smith')

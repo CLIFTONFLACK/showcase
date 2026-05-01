@@ -28,7 +28,7 @@ export default function BibliographyDetailPage() {
   const [sortKey, setSortKey] = useState<SortKey>('none')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
-  // Citation style — persisted in localStorage
+  // Citation style -- persisted in localStorage
   const [citationStyle, setCitationStyle] = useState<CitationStyle>(
     () => (localStorage.getItem('sla-citation-style') as CitationStyle | null) ?? 'vancouver'
   )
@@ -41,7 +41,7 @@ export default function BibliographyDetailPage() {
   const [filterAddedFrom, setFilterAddedFrom] = useState('')
   const [filterAddedTo, setFilterAddedTo] = useState('')
 
-  // Share state — initialized to null; set from bib data in useEffect below
+  // Share state -- initialized to null; set from bib data in useEffect below
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [shareLoading, setShareLoading] = useState(false)
   const [shareCopied, setShareCopied] = useState(false)
@@ -61,7 +61,7 @@ export default function BibliographyDetailPage() {
         setBib(data)
         setEditDescription(data.description ?? '')
         setEditTags(data.tags ?? '')
-        // shareUrl must be set here (after bib loads) — not at state declaration time
+        // shareUrl must be set here (after bib loads) -- not at state declaration time
         if (data.isShared && data.shareToken) {
           setShareUrl(`${window.location.origin}/share/${data.shareToken}`)
         } else {
@@ -186,13 +186,13 @@ export default function BibliographyDetailPage() {
   return (
     <div className="page-content" style={{ fontFamily: 'Montserrat, system-ui, sans-serif' }}>
       <button onClick={() => navigate('/bibliographies')} style={{ background: 'none', border: 'none', color: '#7a8aaa', cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 6, padding: 0 }}>
-        ← Back to Bibliographies
+        <- Back to Bibliographies
       </button>
 
       <div style={{ fontSize: 30, fontWeight: 800, color: '#1a2035', marginBottom: 4 }}>{bib.name}</div>
       <div style={{ fontSize: 14, color: '#7a8aaa', marginBottom: 8 }}>
         {allRows.length} paper{allRows.length !== 1 ? 's' : ''}
-        {bib.creatorName && ` · Created by ${bib.creatorName}`}
+        {bib.creatorName && ` . Created by ${bib.creatorName}`}
       </div>
 
       {/* Citation style + Print + Share */}
@@ -216,7 +216,7 @@ export default function BibliographyDetailPage() {
         </a>
         {!bib.isShared ? (
           <button onClick={handleEnableShare} disabled={shareLoading} style={{ padding: '6px 14px', borderRadius: 6, border: '1.5px solid #dde3ef', fontSize: 13, color: '#5a6a8a', background: '#fff', cursor: 'pointer' }}>
-            {shareLoading ? 'Enabling…' : '🔗 Share'}
+            {shareLoading ? 'Enabling...' : '🔗 Share'}
           </button>
         ) : (
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -252,7 +252,7 @@ export default function BibliographyDetailPage() {
           style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1.5px solid #dde3ef', fontSize: 13, fontFamily: 'inherit', boxSizing: 'border-box' }}
         />
         {editError && <div style={{ fontSize: 12, color: '#c0392b' }}>{editError}</div>}
-        {editSaving && <div style={{ fontSize: 12, color: '#7a8aaa' }}>Saving…</div>}
+        {editSaving && <div style={{ fontSize: 12, color: '#7a8aaa' }}>Saving...</div>}
         {editTags && (
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {editTags.split(',').map(t => t.trim()).filter(Boolean).map(tag => (
@@ -355,8 +355,8 @@ export default function BibliographyDetailPage() {
           <option value="none">Sort: Default</option>
           <option value="date-desc">Sort: Newest first</option>
           <option value="date-asc">Sort: Oldest first</option>
-          <option value="az">Sort: A → Z</option>
-          <option value="za">Sort: Z → A</option>
+          <option value="az">Sort: A -> Z</option>
+          <option value="za">Sort: Z -> A</option>
           <option value="added-desc">Date Added (newest)</option>
           <option value="added-asc">Date Added (oldest)</option>
         </select>

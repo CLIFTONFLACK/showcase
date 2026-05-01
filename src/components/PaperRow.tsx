@@ -36,7 +36,7 @@ export default function PaperRow({ row, onRemove, citationStyle, onViewSource }:
       await updateBibliographyNote(row.rowId, noteText)
       setNoteEditing(false)
     } catch {
-      setNoteError('Failed to save note — try again')
+      setNoteError('Failed to save note -- try again')
     } finally {
       setNoteSaving(false)
     }
@@ -71,9 +71,9 @@ export default function PaperRow({ row, onRemove, citationStyle, onViewSource }:
 
           <div style={{ fontSize: 13, color: '#7a8aaa', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
             {(p.authors ?? []).slice(0, 3).join(', ')}{(p.authors ?? []).length > 3 ? ' et al.' : ''}
-            {p.journal && ` · ${p.journal}`}
-            {p.year && ` · ${p.year}`}
-            {addedDate && <span style={{ color: '#b0bccc' }}>· Added {addedDate}</span>}
+            {p.journal && ` . ${p.journal}`}
+            {p.year && ` . ${p.year}`}
+            {addedDate && <span style={{ color: '#b0bccc' }}>. Added {addedDate}</span>}
             <span style={{ padding: '2px 8px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: color.bg, color: color.text }}>
               {SOURCE_LABELS[p.source] ?? p.source}
             </span>
@@ -122,22 +122,22 @@ export default function PaperRow({ row, onRemove, citationStyle, onViewSource }:
           {noteEditing && (
             <div style={{ marginBottom: 8 }}>
               <textarea value={noteText} onChange={e => setNoteText(e.target.value)} onBlur={() => { if (!noteSaving) saveNote() }} onKeyDown={handleNoteKeyDown} rows={4} maxLength={2000} placeholder="Add a note about this paper..." style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1.5px solid #dde3ef', fontSize: 13, fontFamily: 'inherit', resize: 'vertical', boxSizing: 'border-box' }} autoFocus />
-              {noteSaving && <div style={{ fontSize: 12, color: '#9aa5bf' }}>Saving…</div>}
+              {noteSaving && <div style={{ fontSize: 12, color: '#9aa5bf' }}>Saving...</div>}
               {noteError && <div style={{ fontSize: 12, color: '#c0392b' }}>{noteError}</div>}
             </div>
           )}
 
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginTop: 4 }}>
             <button onClick={() => onViewSource(p)} style={{ background: 'none', border: '1px solid #c8d4e8', borderRadius: 5, padding: '3px 10px', fontSize: 12, color: '#3a5a9a', cursor: 'pointer', fontWeight: 500 }}>
-              View Source ↗
+              View Source ->
             </button>
             {p.doi && (
               <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer" style={{ color: '#1a3a6b', fontSize: 12, textDecoration: 'none', border: '1px solid #c8d4e8', borderRadius: 5, padding: '3px 10px' }}>
-                DOI ↗
+                DOI ->
               </a>
             )}
             <button onClick={() => setNoteEditing(e => !e)} disabled={noteSaving} style={{ background: 'none', border: '1px solid #dde3ef', borderRadius: 5, padding: '3px 10px', fontSize: 12, color: '#7a8aaa', cursor: 'pointer' }}>
-              {noteSaving ? 'Saving…' : noteText ? '✏️ Edit note' : '✏️ Add note'}
+              {noteSaving ? 'Saving...' : noteText ? '✏️ Edit note' : '✏️ Add note'}
             </button>
             <button onClick={copyCitation} style={{ background: 'none', border: '1px solid #dde3ef', borderRadius: 5, padding: '3px 10px', fontSize: 12, color: copied ? '#22c55e' : '#7a8aaa', cursor: 'pointer' }}>
               {copied ? '✓ Copied' : '📋 Copy citation'}

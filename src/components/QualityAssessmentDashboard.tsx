@@ -1,7 +1,7 @@
 // src/components/QualityAssessmentDashboard.tsx
 //
 // Phase 2 UI: review per-paper Cochrane RoB 2 assessments produced by the
-// /assessQuality endpoint. Pure presentational component — caller fetches
+// /assessQuality endpoint. Pure presentational component -- caller fetches
 // the data and supplies callbacks for approve/override so this slots into
 // any parent route without coupling to the API layer.
 
@@ -104,7 +104,7 @@ export default function QualityAssessmentDashboard({
           <div>
             <h2 className="text-lg font-semibold text-slate-900">Quality Assessment</h2>
             <p className="text-sm text-slate-600">
-              Cochrane RoB 2 review · {summary.total} papers · avg quality{' '}
+              Cochrane RoB 2 review . {summary.total} papers . avg quality{' '}
               {summary.avgQuality.toFixed(1)}/10
             </p>
           </div>
@@ -207,7 +207,7 @@ export default function QualityAssessmentDashboard({
                 <span className="text-sm text-green-700">✓ Approved</span>
               ) : a.userDecision === 'overridden' ? (
                 <span className="text-sm text-amber-700">
-                  ⚑ Overridden — {a.userOverrideReasoning}
+                  ⚑ Overridden -- {a.userOverrideReasoning}
                 </span>
               ) : (
                 <>

@@ -17,9 +17,9 @@ export default function SavedSearchCard({ search, onDelete }: Props) {
     search.params.indication && `Indication: ${search.params.indication}`,
     search.params.keywords && `Keywords: ${search.params.keywords}`,
     search.params.paperType && `Type: ${search.params.paperType}`,
-    `${search.params.dateFrom} – ${search.params.dateTo}`,
+    `${search.params.dateFrom} - ${search.params.dateTo}`,
     `${search.params.sources.length} sources`,
-  ].filter(Boolean).join(' · ')
+  ].filter(Boolean).join(' . ')
 
   return (
     <div style={{ background: '#fff', border: '1.5px solid #dde3ef', borderRadius: 10, padding: '18px 22px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, boxShadow: '0 1px 3px rgba(26,42,74,0.04)', flexWrap: 'wrap' }}>

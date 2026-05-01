@@ -36,7 +36,7 @@ export default function SearchPage() {
         setLastResultIds(found.lastResultIds ?? [])
         handleSearch(found.params, id)
       })
-      .catch(() => {}) // silently ignore — user can run manually
+      .catch(() => {}) // silently ignore -- user can run manually
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
@@ -45,7 +45,7 @@ export default function SearchPage() {
       const bibs = await listBibliographies()
       setBibliographies(bibs)
     } catch {
-      // Non-blocking — bibliographies just won't show in dropdowns
+      // Non-blocking -- bibliographies just won't show in dropdowns
     }
   }, [])
 

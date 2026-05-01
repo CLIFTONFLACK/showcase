@@ -54,7 +54,7 @@ export default function ResultCard({
           setSelectedBibId('')
         }, 2000)
       } catch {
-        // Creating or adding failed — reset state
+        // Creating or adding failed -- reset state
       } finally {
         setCreatingBib(false)
       }
@@ -67,7 +67,7 @@ export default function ResultCard({
       setAdded(true)
       setTimeout(() => setAdded(false), 2000)
     } catch {
-      // Adding failed — button resets to ready state
+      // Adding failed -- button resets to ready state
     } finally {
       setAdding(false)
     }
@@ -106,9 +106,9 @@ export default function ResultCard({
         </div>
         <div style={{ fontSize: 13, color: '#7a8aaa', marginBottom: 8 }}>
           {(paper.authors ?? []).slice(0, 3).join(', ')}{(paper.authors ?? []).length > 3 ? ' et al.' : ''}
-          {paper.journal && ` · ${paper.journal}`}
-          {paper.year && ` · ${paper.year}`}
-          {paper.doi && ` · DOI: ${paper.doi}`}
+          {paper.journal && ` . ${paper.journal}`}
+          {paper.year && ` . ${paper.year}`}
+          {paper.doi && ` . DOI: ${paper.doi}`}
         </div>
 
         {/* Conclusion highlight for Clinical Papers */}
@@ -151,7 +151,7 @@ export default function ResultCard({
         )}
 
         <div style={{ display: 'flex', gap: 7, marginBottom: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-          {/* Source badges — one per source this paper was found in */}
+          {/* Source badges -- one per source this paper was found in */}
           {(paper.sources ?? [paper.source]).map(src => {
             const c = SOURCE_COLORS[src] ?? { bg: '#f0f2f7', text: '#5a6a8a' }
             return (
@@ -173,12 +173,12 @@ export default function ResultCard({
         </div>
 
         <div style={{ display: 'flex', gap: 8, alignItems: isMobile ? 'flex-start' : 'center', flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row' }}>
-          {/* View Source → opens panel */}
+          {/* View Source -> opens panel */}
           <button
             onClick={() => onViewSource(paper)}
             style={{ padding: '6px 12px', borderRadius: 6, fontSize: 13, border: '1.5px solid #c8d4e8', background: '#fff', color: '#3a5a9a', fontWeight: 500, cursor: 'pointer' }}
           >
-            View Source ↗
+            View Source ->
           </button>
 
           {/* Note toggle */}

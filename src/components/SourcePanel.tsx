@@ -40,12 +40,12 @@ export default function SourcePanel({ paper, onClose }: Props) {
         {/* Header */}
         <div style={{ padding: '18px 20px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: '#1a3a6b', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Paper Detail</div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, color: '#9aa5bf', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, color: '#9aa5bf', cursor: 'pointer', lineHeight: 1 }}>x</button>
         </div>
 
         {/* Body */}
         <div style={{ padding: '20px', flex: 1 }}>
-          {/* Open in new tab — guard against empty URL (Google Scholar can return '') */}
+          {/* Open in new tab -- guard against empty URL (Google Scholar can return '') */}
           {paper.url ? (
             <a
               href={paper.url}
@@ -57,7 +57,7 @@ export default function SourcePanel({ paper, onClose }: Props) {
                 textDecoration: 'none',
               }}
             >
-              Open in Source ↗
+              Open in Source ->
             </a>
           ) : (
             <div style={{ textAlign: 'center', padding: '10px 16px', marginBottom: 20, background: '#f7f9fc', borderRadius: 8, fontSize: 14, color: '#9aa5bf' }}>
@@ -80,11 +80,11 @@ export default function SourcePanel({ paper, onClose }: Props) {
           {/* Metadata row */}
           <div style={{ fontSize: 13, color: '#7a8aaa', marginBottom: 12, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {paper.journal && <span>{paper.journal}</span>}
-            {paper.year && <span>· {paper.year}</span>}
+            {paper.year && <span>. {paper.year}</span>}
             {paper.doi && (
               <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener noreferrer"
                 style={{ color: '#1a3a6b', textDecoration: 'none', fontSize: 12 }}>
-                DOI: {paper.doi} ↗
+                DOI: {paper.doi} ->
               </a>
             )}
           </div>

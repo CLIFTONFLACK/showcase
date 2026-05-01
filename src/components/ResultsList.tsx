@@ -101,7 +101,7 @@ export default function ResultsList({ results, totalCount, bibliographies, onAdd
           <div style={{ fontSize: 14, color: '#5a6a8a' }}>
             <strong style={{ color: '#1a2035', fontSize: 16 }}>{totalCount} unique results</strong>{' '}across {results.filter(r => r.papers.length > 0).length} sources
           </div>
-          {/* Per-source tallies — hidden on mobile */}
+          {/* Per-source tallies -- hidden on mobile */}
           {!isMobile && (
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
               {results.filter(r => r.papers.length > 0).map(r => {
@@ -244,7 +244,7 @@ export default function ResultsList({ results, totalCount, bibliographies, onAdd
               fontSize: 14, cursor: safePage === 0 ? 'not-allowed' : 'pointer', fontWeight: 500,
             }}
           >
-            ← Prev
+            <- Prev
           </button>
           <span style={{ fontSize: 14, color: '#5a6a8a', fontWeight: 500 }}>
             Page {safePage + 1} of {totalPages}
@@ -258,7 +258,7 @@ export default function ResultsList({ results, totalCount, bibliographies, onAdd
               fontSize: 14, cursor: safePage === totalPages - 1 ? 'not-allowed' : 'pointer', fontWeight: 500,
             }}
           >
-            Next →
+            Next ->
           </button>
         </div>
       )}

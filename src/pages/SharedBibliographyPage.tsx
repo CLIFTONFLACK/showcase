@@ -28,7 +28,7 @@ export default function SharedBibliographyPage() {
 
   if (loading) return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', fontFamily: 'Montserrat, system-ui, sans-serif' }}>
-      <div style={{ color: '#9aa5bf', fontSize: 15 }}>Loading bibliography…</div>
+      <div style={{ color: '#9aa5bf', fontSize: 15 }}>Loading bibliography...</div>
     </div>
   )
 
@@ -45,7 +45,7 @@ export default function SharedBibliographyPage() {
   if (error === 'network' || !bib) return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', fontFamily: 'Montserrat, system-ui, sans-serif' }}>
       <div style={{ textAlign: 'center' }}>
-        <p style={{ color: '#c0392b', fontSize: 14 }}>Unable to load — please try again.</p>
+        <p style={{ color: '#c0392b', fontSize: 14 }}>Unable to load -- please try again.</p>
         <button onClick={load} style={{ marginTop: 12, padding: '8px 16px', borderRadius: 6, border: '1.5px solid #dde3ef', cursor: 'pointer' }}>Retry</button>
       </div>
     </div>
@@ -58,9 +58,9 @@ export default function SharedBibliographyPage() {
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1a2035', margin: 0 }}>{bib.name}</h1>
           <div style={{ fontSize: 13, color: '#7a8aaa', marginTop: 4 }}>
-            {bib.creatorName && `By ${bib.creatorName} · `}
+            {bib.creatorName && `By ${bib.creatorName} . `}
             {bib.papers.length} paper{bib.papers.length !== 1 ? 's' : ''}
-            {' · '}Shared bibliography (read-only)
+            {' . '}Shared bibliography (read-only)
           </div>
           {bib.description && (
             <div style={{ fontSize: 13, color: '#5a6a8a', marginTop: 6 }}>{bib.description}</div>
@@ -77,14 +77,14 @@ export default function SharedBibliographyPage() {
             <div style={{ fontSize: 15, color: '#1a2035', fontWeight: 600, marginBottom: 6, lineHeight: 1.5 }}>{p.title}</div>
             <div style={{ fontSize: 13, color: '#7a8aaa', display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {(p.authors ?? []).slice(0, 3).join(', ')}{(p.authors ?? []).length > 3 ? ' et al.' : ''}
-              {p.journal && ` · ${p.journal}`}
-              {p.year && ` · ${p.year}`}
+              {p.journal && ` . ${p.journal}`}
+              {p.year && ` . ${p.year}`}
               <span style={{ padding: '2px 8px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: color.bg, color: color.text }}>
                 {SOURCE_LABELS[p.source] ?? p.source}
               </span>
               {p.doi && (
                 <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer" style={{ color: '#1a3a6b', fontSize: 12, textDecoration: 'none' }}>
-                  DOI ↗
+                  DOI ->
                 </a>
               )}
             </div>

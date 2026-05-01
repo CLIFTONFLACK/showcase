@@ -58,13 +58,13 @@ export default function SourceSelector({ selected, onChange }: Props) {
       <div style={{ fontSize: 12, color: '#5a6a8a', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
         Sources <span style={{ color: '#9aa5bf', textTransform: 'none', letterSpacing: 0, fontWeight: 400 }}>({selected.length} selected)</span>
       </div>
-      {tierLabel('Tier 1 — Primary')}
+      {tierLabel('Tier 1 -- Primary')}
       <div className="source-grid-4" style={{ marginBottom: 0 }}>
         {TIER_1.map(src => (
           <SourceButton key={src.id} src={src} checked={selected.includes(src.id)} onToggle={() => toggle(src.id)} />
         ))}
       </div>
-      {tierLabel('Tier 2 — Extended')}
+      {tierLabel('Tier 2 -- Extended')}
       <div className="source-grid-4">
         {TIER_2.map(src => (
           <SourceButton key={src.id} src={src} checked={selected.includes(src.id)} onToggle={() => toggle(src.id)} />

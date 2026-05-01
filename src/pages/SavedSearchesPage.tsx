@@ -24,7 +24,7 @@ export default function SavedSearchesPage() {
     <div className="page-content" style={{ fontFamily: 'Montserrat, system-ui, sans-serif' }}>
       <div style={{ marginBottom: 28 }}>
         <div style={{ fontFamily: '"Montserrat", system-ui, sans-serif', fontSize: 26, fontWeight: 800, color: '#1a2035', marginBottom: 4 }}>Saved Searches</div>
-        <div style={{ fontSize: 14, color: '#7a8aaa' }}>Reusable search templates — click Load &amp; Run to pre-fill the search form</div>
+        <div style={{ fontSize: 14, color: '#7a8aaa' }}>Reusable search templates -- click Load &amp; Run to pre-fill the search form</div>
       </div>
 
       {error && <div style={{ color: '#c0392b', padding: '12px 16px', background: '#fff5f5', borderRadius: 8, marginBottom: 16, fontSize: 14 }}>⚠ {error}</div>}

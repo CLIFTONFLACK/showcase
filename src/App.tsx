@@ -15,7 +15,7 @@ import ProtocolPage from './pages/ProtocolPage'
 export default function App() {
   return (
     <Routes>
-      {/* Standalone routes — no sidebar */}
+      {/* Standalone routes -- no sidebar */}
       <Route path="/bibliographies/:id/print" element={<BibliographyPrintPage />} />
       <Route path="/share/:token" element={<SharedBibliographyPage />} />
 

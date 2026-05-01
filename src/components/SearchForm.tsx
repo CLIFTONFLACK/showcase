@@ -155,7 +155,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
         Search Parameters
       </div>
 
-      {/* Bibliography Type — full width */}
+      {/* Bibliography Type -- full width */}
       <div style={{ marginBottom: 20 }}>
         <label style={labelStyle}>Bibliography Type</label>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -189,7 +189,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: '#eef3ff', color: '#1a3a6b', borderRadius: 16, padding: '3px 10px 3px 12px', fontSize: 12, fontWeight: 500, marginRight: 6, marginBottom: 4 }}>
                 {alt}
                 <button type="button" onClick={() => setIndicationAlternates(prev => prev.filter((_, j) => j !== i))}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7a8aaa', fontSize: 14, lineHeight: 1, padding: 0 }}>×</button>
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7a8aaa', fontSize: 14, lineHeight: 1, padding: 0 }}>x</button>
               </span>
             ))}
             <button
@@ -200,7 +200,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
               }}
               style={{ background: 'none', border: 'none', color: '#1a3a6b', cursor: 'pointer', fontSize: 12, padding: '2px 0', fontWeight: 500 }}
             >
-              ＋ Add alternate spelling
+              + Add alternate spelling
             </button>
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
           </div>
         )}
 
-        {/* Author — clinical only */}
+        {/* Author -- clinical only */}
         {bibliographyType === 'clinical' && (
           <div>
             <label style={labelStyle}>Author</label>
@@ -220,7 +220,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
           </div>
         )}
 
-        {/* Country — only for non-clinical types */}
+        {/* Country -- only for non-clinical types */}
         {showCountry ? (
           <div ref={countryRef} style={{ position: 'relative' }}>
             <label style={labelStyle}>Country</label>
@@ -280,7 +280,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
             )}
           </div>
         ) : (
-          /* Paper Type — shown for clinical */
+          /* Paper Type -- shown for clinical */
           <div ref={paperTypeRef} style={{ position: 'relative' }}>
             <label style={labelStyle}>Paper Type</label>
             <button
@@ -337,9 +337,9 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
           </div>
         </div>
 
-        {/* Negative Keywords — full width */}
+        {/* Negative Keywords -- full width */}
         <div style={{ gridColumn: '1 / -1' }}>
-          <label style={labelStyle}>Negative Keywords <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(comma-separated — multi-word phrases supported, e.g. "case report, animal study")</span></label>
+          <label style={labelStyle}>Negative Keywords <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(comma-separated -- multi-word phrases supported, e.g. "case report, animal study")</span></label>
           <input style={inputStyle} value={params.negativeKeywords ?? ''} onChange={set('negativeKeywords')} placeholder="e.g. animal, mouse, rat, in vitro" />
         </div>
       </div>

@@ -63,7 +63,7 @@ export interface Bibliography {
 }
 
 export interface BibliographyPaperRow {
-  rowId: number   // bibliography_papers.id — needed for DELETE
+  rowId: number   // bibliography_papers.id -- needed for DELETE
   paper: Paper
   note: string        // annotation text, empty string when unset
   addedAt: string     // ISO timestamp from bibliography_papers.added_at

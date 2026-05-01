@@ -9,8 +9,8 @@ export default function WorkflowPage() {
   const steps = [
     { n: 1, title: 'Define a protocol', body: 'Create a PICO question, inclusion criteria, and an extraction template for a bibliography.' },
     { n: 2, title: 'Screen papers', body: 'Claude applies the inclusion criteria to each paper and records its reasoning to the audit log.' },
-    { n: 3, title: 'Extract fields', body: 'Full-text retrieval (PMC → CrossRef) followed by field-by-field extraction against the protocol template.' },
-    { n: 4, title: 'Assess quality', body: 'Cochrane Risk of Bias 2 scoring across five domains, with an overall 0–10 quality score.' },
+    { n: 3, title: 'Extract fields', body: 'Full-text retrieval (PMC -> CrossRef) followed by field-by-field extraction against the protocol template.' },
+    { n: 4, title: 'Assess quality', body: 'Cochrane Risk of Bias 2 scoring across five domains, with an overall 0-10 quality score.' },
     { n: 5, title: 'Review & override', body: 'Approve each AI assessment or override specific bias domains with your own reasoning.' },
   ]
 
@@ -66,7 +66,7 @@ export default function WorkflowPage() {
             fontSize: 13, fontWeight: 600, textDecoration: 'none',
           }}
         >
-          Go to Bibliographies →
+          Go to Bibliographies ->
         </Link>
       </div>
     </div>

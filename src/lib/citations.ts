@@ -2,11 +2,11 @@
 import type { Paper, CitationStyle } from '../types'
 
 // Fallback rules (from spec):
-// - authors empty → omit author segment, begin with title
-// - year missing → 'n.d.'
-// - journal missing → omit journal segment
-// - doi missing → use paper.url; if also absent, omit link
-// - title missing → '[No title]'
+// - authors empty -> omit author segment, begin with title
+// - year missing -> 'n.d.'
+// - journal missing -> omit journal segment
+// - doi missing -> use paper.url; if also absent, omit link
+// - title missing -> '[No title]'
 
 function authorList(authors: string[], max = 6): string {
   if (!authors.length) return ''
