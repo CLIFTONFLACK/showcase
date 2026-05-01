@@ -173,12 +173,12 @@ export default function ResultCard({
         </div>
 
         <div style={{ display: 'flex', gap: 8, alignItems: isMobile ? 'flex-start' : 'center', flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row' }}>
-          {/* View Source -> opens panel */}
+          {/* View Source - opens panel */}
           <button
             onClick={() => onViewSource(paper)}
             style={{ padding: '6px 12px', borderRadius: 6, fontSize: 13, border: '1.5px solid #c8d4e8', background: '#fff', color: '#3a5a9a', fontWeight: 500, cursor: 'pointer' }}
           >
-            View Source ->
+            View Source -
           </button>
 
           {/* Note toggle */}

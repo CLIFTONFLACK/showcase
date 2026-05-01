@@ -46,7 +46,7 @@ export default function HomePage() {
       >
         <span style={{ fontSize: 26 }}>🔍</span>
         Search Clinical Literature
-        <span style={{ fontSize: 14, opacity: 0.7, fontWeight: 400, marginLeft: 4 }}>-></span>
+        <span style={{ fontSize: 14, opacity: 0.7, fontWeight: 400, marginLeft: 4 }}>-</span>
       </button>
 
       {/* Stats row */}
@@ -65,7 +65,7 @@ export default function HomePage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: '#1a2035' }}>Recent Bibliographies</div>
             <button onClick={() => navigate('/bibliographies')} style={{ background: 'none', border: 'none', color: '#1a3a6b', fontSize: 12, fontWeight: 600, cursor: 'pointer', padding: 0 }}>
-              View all ->
+              View all -
             </button>
           </div>
           {loading ? (
@@ -74,7 +74,7 @@ export default function HomePage() {
             <div style={{ color: '#9aa5bf', fontSize: 13, textAlign: 'center', padding: '20px 0' }}>
               No bibliographies yet.<br />
               <button onClick={() => navigate('/search')} style={{ marginTop: 8, background: 'none', border: 'none', color: '#1a3a6b', cursor: 'pointer', fontWeight: 600, fontSize: 13 }}>
-                Start searching ->
+                Start searching -
               </button>
             </div>
           ) : (
@@ -102,7 +102,7 @@ export default function HomePage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: '#1a2035' }}>Recent Searches</div>
             <button onClick={() => navigate('/history')} style={{ background: 'none', border: 'none', color: '#1a3a6b', fontSize: 12, fontWeight: 600, cursor: 'pointer', padding: 0 }}>
-              View all ->
+              View all -
             </button>
           </div>
           {loading ? (

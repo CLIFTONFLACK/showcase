@@ -186,7 +186,7 @@ export default function BibliographyDetailPage() {
   return (
     <div className="page-content" style={{ fontFamily: 'Montserrat, system-ui, sans-serif' }}>
       <button onClick={() => navigate('/bibliographies')} style={{ background: 'none', border: 'none', color: '#7a8aaa', cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 18, display: 'flex', alignItems: 'center', gap: 6, padding: 0 }}>
-        <- Back to Bibliographies
+        - Back to Bibliographies
       </button>
 
       <div style={{ fontSize: 30, fontWeight: 800, color: '#1a2035', marginBottom: 4 }}>{bib.name}</div>
@@ -355,8 +355,8 @@ export default function BibliographyDetailPage() {
           <option value="none">Sort: Default</option>
           <option value="date-desc">Sort: Newest first</option>
           <option value="date-asc">Sort: Oldest first</option>
-          <option value="az">Sort: A -> Z</option>
-          <option value="za">Sort: Z -> A</option>
+          <option value="az">Sort: A - Z</option>
+          <option value="za">Sort: Z - A</option>
           <option value="added-desc">Date Added (newest)</option>
           <option value="added-asc">Date Added (oldest)</option>
         </select>

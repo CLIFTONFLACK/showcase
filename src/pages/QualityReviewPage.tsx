@@ -1,6 +1,6 @@
 // src/pages/QualityReviewPage.tsx
 //
-// Phase 2 UI shell. Drives the extract -> assessQuality -> review flow for
+// Phase 2 UI shell. Drives the extract - assessQuality - review flow for
 // a given protocol + paper set, then hands the results to
 // QualityAssessmentDashboard. Self-contained: nothing in the existing
 // bibliography pages is touched.
@@ -176,7 +176,7 @@ export default function QualityReviewPage() {
           padding: 0,
         }}
       >
-        <- Back
+        - Back
       </button>
 
       {stage === 'extracting' && (

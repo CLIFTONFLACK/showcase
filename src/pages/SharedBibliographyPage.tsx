@@ -84,7 +84,7 @@ export default function SharedBibliographyPage() {
               </span>
               {p.doi && (
                 <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer" style={{ color: '#1a3a6b', fontSize: 12, textDecoration: 'none' }}>
-                  DOI ->
+                  DOI -
                 </a>
               )}
             </div>

@@ -129,11 +129,11 @@ export default function PaperRow({ row, onRemove, citationStyle, onViewSource }:
 
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginTop: 4 }}>
             <button onClick={() => onViewSource(p)} style={{ background: 'none', border: '1px solid #c8d4e8', borderRadius: 5, padding: '3px 10px', fontSize: 12, color: '#3a5a9a', cursor: 'pointer', fontWeight: 500 }}>
-              View Source ->
+              View Source -
             </button>
             {p.doi && (
               <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer" style={{ color: '#1a3a6b', fontSize: 12, textDecoration: 'none', border: '1px solid #c8d4e8', borderRadius: 5, padding: '3px 10px' }}>
-                DOI ->
+                DOI -
               </a>
             )}
             <button onClick={() => setNoteEditing(e => !e)} disabled={noteSaving} style={{ background: 'none', border: '1px solid #dde3ef', borderRadius: 5, padding: '3px 10px', fontSize: 12, color: '#7a8aaa', cursor: 'pointer' }}>

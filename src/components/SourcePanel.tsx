@@ -57,7 +57,7 @@ export default function SourcePanel({ paper, onClose }: Props) {
                 textDecoration: 'none',
               }}
             >
-              Open in Source ->
+              Open in Source -
             </a>
           ) : (
             <div style={{ textAlign: 'center', padding: '10px 16px', marginBottom: 20, background: '#f7f9fc', borderRadius: 8, fontSize: 14, color: '#9aa5bf' }}>
@@ -84,7 +84,7 @@ export default function SourcePanel({ paper, onClose }: Props) {
             {paper.doi && (
               <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener noreferrer"
                 style={{ color: '#1a3a6b', textDecoration: 'none', fontSize: 12 }}>
-                DOI: {paper.doi} ->
+                DOI: {paper.doi} -
               </a>
             )}
           </div>
