@@ -236,7 +236,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
                 {selectedCountries.length === 0 ? 'Any country' : selectedCountries.length === 1 ? selectedCountries[0] : `${selectedCountries.length} countries selected`}
               </span>
-              <span style={{ marginLeft: 8, fontSize: 11, color: '#9aa5bf' }}>{countryOpen ? '▲' : '▼'}</span>
+              <span style={{ marginLeft: 8, fontSize: 11, color: '#9aa5bf' }}>{countryOpen ? '^' : 'v'}</span>
             </button>
             {countryOpen && (
               <div style={{
@@ -295,7 +295,7 @@ export default function SearchForm({ onSearch, onSave, initialParams, isLoading 
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
                 {selectedPaperTypes.length === 0 ? 'Any type' : selectedPaperTypes.length === 1 ? selectedPaperTypes[0] : `${selectedPaperTypes.length} types selected`}
               </span>
-              <span style={{ marginLeft: 8, fontSize: 11, color: '#9aa5bf' }}>{paperTypeOpen ? '▲' : '▼'}</span>
+              <span style={{ marginLeft: 8, fontSize: 11, color: '#9aa5bf' }}>{paperTypeOpen ? '^' : 'v'}</span>
             </button>
             {paperTypeOpen && (
               <div style={{

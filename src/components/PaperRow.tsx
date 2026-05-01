@@ -106,7 +106,7 @@ export default function PaperRow({ row, onRemove, citationStyle, onViewSource }:
           {p.abstract && (
             <div style={{ marginBottom: 8 }}>
               <button onClick={() => setAbstractOpen(o => !o)} style={{ background: 'none', border: 'none', color: '#1a3a6b', cursor: 'pointer', fontSize: 12, padding: 0, fontWeight: 500 }}>
-                {abstractOpen ? 'Hide abstract ▲' : 'Show abstract ▼'}
+                {abstractOpen ? 'Hide abstract ^' : 'Show abstract v'}
               </button>
               {abstractOpen && (
                 <div style={{ marginTop: 8, padding: '10px 14px', background: '#f7f9fc', borderRadius: 8, fontSize: 13, color: '#5a6a8a', lineHeight: 1.7 }}>

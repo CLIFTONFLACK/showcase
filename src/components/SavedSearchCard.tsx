@@ -29,7 +29,7 @@ export default function SavedSearchCard({ search, onDelete }: Props) {
       </div>
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
         <button onClick={handleLoadAndRun} style={{ padding: '8px 16px', border: 'none', borderRadius: 8, background: '#c8a84b', color: '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
-          ▶ Run now
+          > Run now
         </button>
         <button onClick={() => onDelete(search.id)} style={{ padding: '7px 12px', border: '1.5px solid #fcc', borderRadius: 6, background: '#fff5f5', color: '#c0392b', fontSize: 13, cursor: 'pointer' }}>
           Delete
